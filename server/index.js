@@ -1,30 +1,14 @@
+require('dotenv').config(); 
+
 const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
+const cors = require('cors');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
-const port = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3001;
 
-const typeDefs = gql `
-    type Query {
-        hello: String
-    }
-`;
+app.use(cors());
+app.use(express.json());
+app.use('/api/auth', authRoutes);
 
-const resolvers = {
-    Query: {
-        hello: () => 'Hello world!',
-    },
-};
-
-async function startServer() {
-    const server = new ApolloServer({ typeDefs, resolvers });
-    await server.start();
-    server.applyMiddleware({ app });
-
-    app.listen(port, () => {
-        console.log(`Server ready at http://localhost:${port}${server.graphqlPath}`);
-    });
-}
-
-startServer();
-
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

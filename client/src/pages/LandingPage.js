@@ -113,7 +113,6 @@ const LandingPage = () => {
             <path
               id="black"
               stroke="#000000"
-              stroke-width="2"
               d="m483.6 267.6l95.99997 0l0 43.212585l-95.99997 0z"
             />
             <path
