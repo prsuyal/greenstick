@@ -19,4 +19,6 @@
       blinkTextCursor 600ms steps(30) infinite normal;
   }
   
- 
+ .typed-cursor {
+  color: #40ac70;
+ }
