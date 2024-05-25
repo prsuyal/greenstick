@@ -22,3 +22,37 @@
  .typed-cursor {
   color: #40ac70;
  }
+
+ 
+ @keyframes flyIn {
+  from {
+      transform: translateY(-50px);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
+.promo-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  animation: flyIn 1s ease-out;
+}
+
+.promo-text {
+  text-align: center;
+  font-size: 0.875rem; 
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  background-color: #f9fafb;
+  border: 1px dotted #d1d5db; 
+  border-radius: 9999px;
+}
+
+.promo-text .font-bold {
+  color: #40ac70; 
+}
