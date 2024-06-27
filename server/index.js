@@ -12,7 +12,7 @@ const userRoutes = require('./routes/userRoutes');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const allowedOrigins = ['http://localhost:3000', 'https://www.greenstickusa.com'];
+const allowedOrigins = ['http://localhost:3000', 'https://www.greenstickusa.com', 'https://greenstickusa.com'];
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
@@ -36,7 +36,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
+    secure: process.env.NODE_ENV === 'production', 
     maxAge: 24 * 60 * 60 * 1000 
   }
 }));
@@ -46,7 +46,7 @@ app.use(passport.session());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/stripe', stripeRoutes);
-app.use('/api', userRoutes); 
+app.use('/api', userRoutes);
 
 app.use((err, req, res, next) => {
   console.error('Error:', err);

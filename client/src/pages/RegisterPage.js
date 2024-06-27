@@ -37,7 +37,7 @@ const RegisterPage = ({ onLogin, onRegister }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://www.greenstickusa.com/api/auth/register", {
+      const response = await fetch("https://www.api.greenstickusa.com/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -215,7 +215,7 @@ const RegisterPage = ({ onLogin, onRegister }) => {
                 <p className="text-xl font-semibold mb-4">Or sign up with</p>
                 <div className="space-y-4">
           <a
-            href="https://www.greenstickusa.com/api/auth/google"
+            href="https://www.api.greenstickusa.com/api/auth/google"
             className="w-full p-3 bg-white border border-gray-300 text-gray-700 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors duration-300"
           >
             <img src={googleIcon} alt="Google" className="h-6 w-6" />

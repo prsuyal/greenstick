@@ -44,7 +44,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
         } else {
           console.log('User before subscribing:', user);
           try {
-            const response = await fetch('https://www.greenstickusa.com/api/stripe/create-checkout-session', {
+            const response = await fetch('https://www.api.greenstickusa.com/api/stripe/create-checkout-session', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
