@@ -42,9 +42,9 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
         if (!isAuthenticated) {
           navigate('/register');
         } else {
-          console.log('User before subscribing:', user); // Log user data
+          console.log('User before subscribing:', user);
           try {
-            const response = await fetch('http://localhost:3001/api/stripe/create-checkout-session', {
+            const response = await fetch('https://www.greenstickusa.com/api/stripe/create-checkout-session', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
                         {isAuthenticated ? (
                             <button
                                 className="border-2 border-black text-black font-bold bg-white py-1 px-2 sm:px-3 sm:py-2 rounded-md font-[Poppins] hover:text-white hover:bg-black transition-colors duration-300"
-                                onClick={onLogout} // Call the logout function
+                                onClick={onLogout} 
                             >
                                 Log out
                             </button>

@@ -12,10 +12,19 @@ const userRoutes = require('./routes/userRoutes');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors({
-  origin: 'http://localhost:3000',
+const allowedOrigins = ['http://localhost:3000', 'https://www.greenstickusa.com'];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
-}));
+};
+
+app.use(cors(corsOptions));
 
 app.use('/api/stripe/webhook', express.raw({ type: 'application/json' }), stripeWebhookRoutes);
 

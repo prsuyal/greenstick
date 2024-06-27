@@ -294,7 +294,7 @@ const LandingPage = () => {
                 <p className="text-sm mt-2">
     Or,{" "}
     <a 
-      href="http://localhost:3001/api/auth/google" 
+      href="https://www.greenstickusa.com/api/auth/google" 
       className="text-black font-bold hover:underline"
     >
       click here
