@@ -27,12 +27,12 @@ const Testimonials = () => {
     <div className="mt-12 py-12 bg-gs-light-green">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-4xl sm:text-5xl font-[Poppins] text-black mb-4">
-          See What Others Have to Say
+        Check out what experts have to say.
         </h2>
         <p className="mt-4 text-lg text-black font-[Poppins]">
           At Greenstick, we pride ourselves on delivering high quality content.
           <br />
-          But don't just take our word for it. Hear what the people have to say.
+          But don't just take our word for it. See what the experts are saying.
         </p>
       </div>
       <div className="mt-8 flex justify-center">

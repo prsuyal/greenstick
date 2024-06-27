@@ -39,11 +39,12 @@ const FAQItem = ({ question, answer }) => {
 
 const FAQSection = () => {
   const faqItems = [
-    { question: "How does pricing work?", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-    { question: "Is Exo available free to use?", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-    { question: "How do I change or cancel my subscription?", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-    { question: "How do I register?", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-    { question: "How can I give feedback?", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+    { question: "How much does Greenstick cost?", answer: "You can find detailed price information at our Pricing page. Keep in mind that until Greenstick is released on August 1, you can get your first three months 20% off by using code EARLY at checkout!" },
+    { question: "How can I get Exo?", answer: "Once Greenstick is released on August 1, a trial of Exo will be available to users on the Standard plan, while users on the Pro and Ultimate plans will have near-complete access to all of Exo’s abilities." },
+    { question: "How do I change or cancel my subscription?", answer: "Log in to your account and navigate to the Settings page. From there, you will be able to make changes to your account and subscription. Please note that at this time, we cannot offer refunds under any circumstances." },
+    { question: "How do I register?", answer: "Just click the link here and follow the steps!" },
+    { question: "How do I change or cancel my subscription?", answer: "Log in to your account and navigate to the Settings page. From there, you will be able to make changes to your account and subscription. Please note that at this time, we cannot offer refunds under any circumstances." },
+    { question: "Where can I ask more questions?", answer: "Try checking our help page first. If you’re still not sure, feel free to contact us at the email address to the left!" },
   ];
 
   return (
@@ -63,7 +64,7 @@ const FAQSection = () => {
                 </div>
               </div>
             </div>
-            <a href="#" className="text-gs-dark-green font-[Poppins] font-medium flex items-center">
+            <a href="/help" className="text-gs-dark-green font-[Poppins] font-medium flex items-center">
               Help
               <svg className="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
