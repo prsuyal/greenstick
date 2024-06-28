@@ -36,8 +36,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: process.env.NODE_ENV === 'production', 
-    maxAge: 24 * 60 * 60 * 1000 
+    secure: process.env.NODE_ENV === 'production', // Ensure secure cookies in production
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
   }
 }));
 
@@ -46,7 +46,7 @@ app.use(passport.session());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/stripe', stripeRoutes);
-app.use('/api', userRoutes);
+app.use('/api', userRoutes); 
 
 app.use((err, req, res, next) => {
   console.error('Error:', err);
