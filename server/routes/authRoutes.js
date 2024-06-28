@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { createUser, loginUser, updateStripeCustomerId } = require('../models/userModel');
+const { createUser, loginUser, updateStripeCustomerId, getUserByEmail, updateUserVerificationCode } = require('../models/userModel');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -36,7 +36,18 @@ router.post('/register', async (req, res) => {
 
     await updateStripeCustomerId(newUser.id, customer.id);
 
-    sendVerificationEmail(newUser.email, newUser.verification_code);
+    const verificationCode = crypto.randomInt(100000, 999999).toString();
+    await updateUserVerificationCode(newUser.id, verificationCode);
+
+    const msg = {
+      to: email,
+      from: {email: 'info@greenstickusa.com', name: 'Greenstick LLC'},
+      subject: 'Email Verification - Greenstick',
+      text: `Your verification code is: ${verificationCode}`,
+      html: `<p>Your verification code is: <strong>${verificationCode}</strong></p>`,
+    };
+
+    await sgMail.send(msg);
 
     req.login(newUser, function(err) {
       if (err) {
@@ -89,17 +100,20 @@ router.post('/logout', (req, res) => {
 router.post('/verify-email', async (req, res) => {
   const { email, code } = req.body;
   try {
-    const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-    const user = rows[0];
-
-    if (user && user.verification_code === code) {
-      await pool.query('UPDATE users SET is_verified = true, verification_code = null WHERE email = $1', [email]);
-      res.status(200).json({ message: 'Email verified successfully!' });
-    } else {
-      res.status(400).json({ message: 'Invalid verification code' });
+    const user = await getUserByEmail(email);
+    if (!user || user.verification_code !== code) {
+      return res.status(400).json({ message: 'Invalid verification code' });
     }
+
+    await updateUserVerificationCode(user.id, null);
+    user.is_verified = true;
+    user.verification_code = null;
+    await user.save();
+
+    return res.status(200).json({ message: 'Email verified successfully', user });
   } catch (error) {
-    res.status(500).json({ message: 'Error verifying email' });
+    console.error('Error during email verification:', error);
+    res.status(500).json({ message: 'Error verifying email.' });
   }
 });
 

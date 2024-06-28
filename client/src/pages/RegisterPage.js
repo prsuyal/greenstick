@@ -6,7 +6,7 @@ import gsLogoBlack from "../assets/images/logo-black.svg";
 import googleIcon from "../assets/images/icons8-google.svg";
 import Footer from "../components/common/Footer";
 
-const RegisterPage = ({ onRegister }) => {
+const RegisterPage = ({ onLogin, onRegister }) => {
   const location = useLocation();
   const [userData, setUserData] = useState({
     username: "",
@@ -57,8 +57,8 @@ const RegisterPage = ({ onRegister }) => {
 
       if (response.ok) {
         console.log("Registration successful");
-        localStorage.setItem('userEmail', userData.email); // Store email in localStorage
-        navigate("/verify-email"); // Redirect to verification page
+        localStorage.setItem('userEmail', userData.email);
+        navigate("/verify-email");
       } else {
         console.log("Registration failed:", responseData.message);
         alert(responseData.message || "Registration failed");
@@ -213,14 +213,14 @@ const RegisterPage = ({ onRegister }) => {
               <div className="text-center">
                 <p className="text-xl font-semibold mb-4">Or sign up with</p>
                 <div className="space-y-4">
-                  <a
-                    href="https://api.greenstickusa.com/api/auth/google"
-                    className="w-full p-3 bg-white border border-gray-300 text-gray-700 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors duration-300"
-                  >
-                    <img src={googleIcon} alt="Google" className="h-6 w-6" />
-                    <span>Google</span>
-                  </a>
-                </div>
+          <a
+            href="https://api.greenstickusa.com/api/auth/google"
+            className="w-full p-3 bg-white border border-gray-300 text-gray-700 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors duration-300"
+          >
+            <img src={googleIcon} alt="Google" className="h-6 w-6" />
+            <span>Google</span>
+          </a>
+        </div>
               </div>
               <div className="text-center">
                 <p className="text-gray-600">
