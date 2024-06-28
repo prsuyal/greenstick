@@ -14,6 +14,7 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import DashboardPage from './pages/DashboardPage';
 import SuccessPage from './pages/SuccessPage';
 import CanceledPage from './pages/CanceledPage';
+import VerifyEmailPage from './pages/VerifyEmailPage';  // Import the VerifyEmailPage
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -28,7 +29,7 @@ const App = () => {
       setIsAuthenticated(true);
       setUser(userData);
       setHasPaid(userData.hasPaid || false);
-      setIsEmailConfirmed(userData.isEmailConfirmed || false);
+      setIsEmailConfirmed(userData.is_verified || false);
       console.log('Stored user data:', userData);
     } else {
       console.log('No stored user data found.');
@@ -39,7 +40,7 @@ const App = () => {
     setIsAuthenticated(true);
     setUser(userData);
     setHasPaid(userData.hasPaid || false);
-    setIsEmailConfirmed(userData.isEmailConfirmed || false);
+    setIsEmailConfirmed(userData.is_verified || false);
     localStorage.setItem('user', JSON.stringify(userData));
     console.log('User logged in:', userData);
   };
@@ -89,7 +90,7 @@ const App = () => {
 
   const handleEmailConfirmation = () => {
     setIsEmailConfirmed(true);
-    localStorage.setItem('isEmailConfirmed', 'true');
+    localStorage.setItem('is_verified', 'true');
     console.log('Email confirmed');
   };
 
@@ -122,7 +123,8 @@ const App = () => {
         <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <AppWrapper><RegisterPage /></AppWrapper>} />
         <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <AppWrapper><LoginPage /></AppWrapper>} />
         <Route path="/pricing" element={<AppWrapper><PricingPage /></AppWrapper>} />
-        <Route path="/dashboard" element={isAuthenticated ? <AppWrapper><DashboardPage /></AppWrapper> : <Navigate to="/login" />} />
+        <Route path="/dashboard" element={isAuthenticated ? (isEmailConfirmed ? <AppWrapper><DashboardPage /></AppWrapper> : <Navigate to="/verify-email" />) : <Navigate to="/login" />} />
+        <Route path="/verify-email" element={<AppWrapper><VerifyEmailPage /></AppWrapper>} />
         <Route path="/success" element={<AppWrapper><SuccessPage /></AppWrapper>} />
         <Route path="/canceled" element={<AppWrapper><CanceledPage /></AppWrapper>} />
         <Route path="*" element={<ErrorPage />} />

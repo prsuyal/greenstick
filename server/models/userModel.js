@@ -9,18 +9,20 @@ const createUser = async (email, password, authProvider, username, fullName, dat
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
     const { rows } = await pool.query(
       `INSERT INTO users 
-       (email, password, created_at, username, full_name, date_of_birth, current_level, streak, payment_status, subscription_id, plan, auth_provider, stripe_customer_id) 
-       VALUES ($1, $2, CURRENT_TIMESTAMP, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) 
+       (email, password, created_at, username, full_name, date_of_birth, current_level, streak, payment_status, subscription_id, plan, auth_provider, stripe_customer_id, is_verified, verification_code) 
+       VALUES ($1, $2, CURRENT_TIMESTAMP, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) 
        RETURNING *;`,
-      [email, hashedPassword, username, fullName, dateOfBirth, 1, 0, false, null, null, authProvider, null]
+      [email, hashedPassword, username, fullName, dateOfBirth, 1, 0, false, null, null, authProvider, null, false, verificationCode]
     );
     return rows[0];
   } catch (error) {
     throw new Error('Registration failed, please try again later.');
   }
 };
+
 
 const loginUser = async (email, password) => {
   try {
