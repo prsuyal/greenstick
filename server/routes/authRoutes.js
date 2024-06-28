@@ -39,15 +39,7 @@ router.post('/register', async (req, res) => {
     const verificationCode = crypto.randomInt(100000, 999999).toString();
     await updateUserVerificationCode(newUser.id, verificationCode);
 
-    const msg = {
-      to: email,
-      from: {email: 'info@greenstickusa.com', name: 'Greenstick LLC'},
-      subject: 'Email Verification - Greenstick',
-      text: `Your verification code is: ${verificationCode}`,
-      html: `<p>Your verification code is: <strong>${verificationCode}</strong></p>`,
-    };
-
-    await sgMail.send(msg);
+    sendVerificationEmail(email, verificationCode);
 
     req.login(newUser, function(err) {
       if (err) {
@@ -64,7 +56,6 @@ router.post('/register', async (req, res) => {
     }
   }
 });
-
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -85,7 +76,6 @@ router.post('/login', async (req, res) => {
     res.status(401).json({ message: error.message });
   }
 });
-
 
 router.post('/logout', (req, res) => {
   req.logout(function(err) {
