@@ -47,7 +47,7 @@ const App = () => {
   const handleLogout = async (navigate, currentPath) => {
     try {
       console.log('Logging out...');
-      const response = await fetch('https://www.api.greenstickusa.com/api/auth/logout', {
+      const response = await fetch('https://api.greenstickusa.com/api/auth/logout', {
         method: 'POST',
         credentials: 'include',
       });

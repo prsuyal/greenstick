@@ -19,7 +19,7 @@ const LoginPage = ({ onLogin }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://www.api.greenstickusa.com/api/auth/login', {
+      const response = await fetch('https://api.greenstickusa.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData)
@@ -43,7 +43,7 @@ const LoginPage = ({ onLogin }) => {
     const email = prompt("Please enter your email:");
     if (email) {
       try {
-        const response = await fetch('https://www.api.greenstickusa.com/api/auth/forgot-password', {
+        const response = await fetch('https://api.greenstickusa.com/api/auth/forgot-password', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email })
@@ -138,14 +138,14 @@ const LoginPage = ({ onLogin }) => {
                 <p className="text-xl font-semibold mb-4">Or log in with</p>
                 <div className="space-y-4">
                   <button
-                    onClick={() => (window.location.href = 'https://www.api.greenstickusa.com/api/auth/google')}
+                    onClick={() => (window.location.href = 'https://api.greenstickusa.com/api/auth/google')}
                     className="w-full p-3 bg-white border border-gray-300 text-gray-700 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors duration-300"
                   >
                     <img src={googleIcon} alt="Google" className="h-6 w-6" />
                     <span>Google</span>
                   </button>
                   <button
-                    onClick={() => (window.location.href = 'https://www.api.greenstickusa.com/api/auth/apple')}
+                    onClick={() => (window.location.href = 'https://api.greenstickusa.com/api/auth/apple')}
                     className="w-full p-3 bg-white border border-gray-300 text-gray-700 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors duration-300"
                   >
                     <img src={appleIcon} alt="Apple" className="h-6 w-6" />
