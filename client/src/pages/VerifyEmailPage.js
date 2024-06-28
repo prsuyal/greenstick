@@ -15,7 +15,7 @@ const VerifyEmailPage = () => {
 
   const handleSubmit = async () => {
     const verificationCode = code.join('');
-    const email = localStorage.getItem('userEmail'); 
+    const email = localStorage.getItem('userEmail');
 
     try {
       const response = await axios.post('https://api.greenstickusa.com/api/auth/verify-email', { email, code: verificationCode });
