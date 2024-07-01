@@ -273,7 +273,7 @@ const LandingPage = () => {
                 <input
     type="email"
     placeholder="Your email address"
-    className="pl-10 pr-8 py-3 sm:py-4 border-2 border-gray-300 rounded-lg w-full"
+    className="pl-10 pr-8 py-3 sm:py-4 border-2 border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-gs-dark-green focus:border-gs-dark-green"
     style={{
       backgroundImage: `url(${emailIcon})`,
       backgroundPosition: "12px center",

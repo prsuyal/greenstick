@@ -31,17 +31,11 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
                         <div className="flex space-x-4">
-                            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-gs-dark-green">
+                            <a href="https://www.facebook.com/people/Greenstick-USA/61561274224424/" target="_blank" rel="noopener noreferrer" className="hover:text-gs-dark-green">
                                 <i className="fab fa-facebook-f"></i>
                             </a>
-                            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-gs-dark-green">
+                            <a href="https://www.instagram.com/greenstick_official" target="_blank" rel="noopener noreferrer" className="hover:text-gs-dark-green">
                                 <i className="fab fa-instagram"></i>
-                            </a>
-                            <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-gs-dark-green">
-                                <i className="fab fa-twitter"></i>
-                            </a>
-                            <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" className="hover:text-gs-dark-green">
-                                <i className="fab fa-tiktok"></i>
                             </a>
                         </div>
                     </div>

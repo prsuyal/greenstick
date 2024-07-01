@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,11 +40,9 @@ const FAQItem = ({ question, answer }) => {
 
 const FAQSection = () => {
   const faqItems = [
-    { question: "How much does Greenstick cost?", answer: "You can find detailed price information at our Pricing page. Keep in mind that until Greenstick is released on August 1, you can get your first three months 20% off by using code EARLY at checkout!" },
-    { question: "How can I get Exo?", answer: "Once Greenstick is released on August 1, a trial of Exo will be available to users on the Standard plan, while users on the Pro and Ultimate plans will have near-complete access to all of Exo’s abilities." },
-    { question: "How do I change or cancel my subscription?", answer: "Log in to your account and navigate to the Settings page. From there, you will be able to make changes to your account and subscription. Please note that at this time, we cannot offer refunds under any circumstances." },
-    { question: "How do I register?", answer: "Just click the link here and follow the steps!" },
-    { question: "How do I change or cancel my subscription?", answer: "Log in to your account and navigate to the Settings page. From there, you will be able to make changes to your account and subscription. Please note that at this time, we cannot offer refunds under any circumstances." },
+    { question: "How much does Greenstick cost?", answer: "You can find detailed price information at our Pricing page. Keep in mind that until Greenstick is released on August 8, you can get your first three months 20% off by using code EARLY at checkout!" },
+    { question: "How can I get Exo?", answer: "Once Greenstick is released on August 8, a trial of Exo will be available to users on the Standard plan, while users on the Pro and Ultimate plans will have near-complete access to all of Exo’s abilities." },
+    { question: "How do I register?", answer: <>Just click the link <Link to="/register" className="text-gs-dark-green hover:underline">here</Link> and follow the steps!</> },
     { question: "Where can I ask more questions?", answer: "Try checking our help page first. If you’re still not sure, feel free to contact us at the email address to the left!" },
   ];
 

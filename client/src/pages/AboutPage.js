@@ -7,7 +7,7 @@ const AboutPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative min-h-screen bg-white">
+    <div className="flex flex-col relative min-h-screen bg-white">
       <div className="fixed top-0 left-0 w-full z-50 px-4 py-2 sm:py-3 bg-white border-y">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <img
@@ -33,7 +33,7 @@ const AboutPage = () => {
         </div>
       </div>
 
-      <div className="pt-32 md:pt-36 lg:pt-44 px-4 sm:px-6 lg:px-8">
+      <div className="flex-grow pt-32 md:pt-36 lg:pt-44 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-sm uppercase tracking-wider text-gs-dark-green mb-2 font-[Poppins]">About</h1>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-[Poppins] font-medium mb-12">Our Vision.</h2>

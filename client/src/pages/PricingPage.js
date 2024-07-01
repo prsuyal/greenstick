@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import gsLogoBlack from "../assets/images/logo-black.svg";
 import Footer from "../components/common/Footer";
 import stripePromise from "../utils/stripe";
+import { motion } from 'framer-motion';
 
 const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
     const navigate = useNavigate();
@@ -85,8 +86,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
     }, [checkoutSessionId]);
 
     return (
-        <div className="min-h-screen bg-white">
-            {/* Navigation bar */}
+        <div className="flex flex-col min-h-screen bg-white">
             <div className="fixed top-0 left-0 w-full z-50 px-4 py-2 sm:py-3 bg-white border-y">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
                     <img
@@ -122,11 +122,20 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
                     </div>
                 </div>
             </div>
-
-            {/* Pricing content */}
-            <div className="pb-32 pt-24 md:pt-28 lg:pt-32 px-4 sm:px-6 lg:px-8">
+            <motion.div
+                initial={{ y: -50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1 }}
+                className="flex justify-center items-center mt-24 bg-gray-100 text-black rounded-xl border border-dotted border-gray-600 max-w-md mx-auto p-2"
+            >
+                <span className="text-center text-sm font-semibold">
+                    Use promo code <span className="font-bold text-gs-dark-green">EARLY</span> for 20% off in your first three months
+                </span>
+            </motion.div>
+            <div className="flex-grow pb-32 pt-24 md:pt-28 lg:pt-16 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center">
+                    <div className="text-center relative">
+                        
                         <h1 className="font-[Poppins] text-7xl font-medium mb-4">Pricing</h1>
                         <p className="font-[Poppins] text-2xl mb-8">Choose the plan that's right for you.</p>
                         <div className="font-[Poppins] flex justify-center items-center mb-8">

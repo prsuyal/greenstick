@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import gsLogoBlack from "../assets/images/logo-black.svg";
 import Footer from "../components/common/Footer";
+import { Link } from 'react-router-dom';
 
 const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +54,7 @@ const HelpPage = () => {
         },
         {
           question: "How do I get Greenstick?",
-          answer: "Greenstick will be released on August 1. You can still sign up now, though, to get a 20% discount on your first three months by using code EARLY at checkout!"
+          answer: "Greenstick will be released on August 8. You can still sign up now, though, to get a 20% discount on your first three months by using code EARLY at checkout!"
         },
         {
           question: "Can I use Greenstick on mobile?",
@@ -87,11 +88,11 @@ const HelpPage = () => {
       questions: [
         {
           question: "How much does Greenstick cost?",
-          answer: "You can find detailed price information at our Pricing page."
+          answer: <>You can find detailed price information <Link to="/pricing" className="text-gs-dark-green hover:underline">here</Link>.</>
         },
         {
           question: "Are there any discounts?",
-          answer: "Until Greenstick is released on August 1, you can get your first three months 20% off by using code EARLY at checkout!"
+          answer: "Until Greenstick is released on August 8, you can get your first three months 20% off by using code EARLY at checkout!"
         }
       ]
     },

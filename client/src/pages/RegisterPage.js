@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import gsLogoBlack from "../assets/images/logo-black.svg";
-import googleIcon from "../assets/images/icons8-google.svg";
 import Footer from "../components/common/Footer";
 
 const RegisterPage = ({ onLogin, onRegister }) => {
-    const location = useLocation();
+  const location = useLocation();
   const [userData, setUserData] = useState({
     username: "",
     fullName: "",
@@ -15,8 +14,8 @@ const RegisterPage = ({ onLogin, onRegister }) => {
     password: "",
     dateOfBirth: new Date(),
     tosChecked: false,
-    mailingListChecked: true, 
-    betaTestingChecked: false
+    mailingListChecked: true,
+    betaTestingChecked: false,
   });
 
   const navigate = useNavigate();
@@ -37,27 +36,30 @@ const RegisterPage = ({ onLogin, onRegister }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://api.greenstickusa.com/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: userData.username,
-          fullName: userData.fullName,
-          email: userData.email,
-          password: userData.password,
-          dateOfBirth: userData.dateOfBirth.toISOString().split('T')[0],
-          tosChecked: userData.tosChecked,
-          mailingListChecked: userData.mailingListChecked,
-          betaTestingChecked: userData.betaTestingChecked
-        }),
-      });
+      const response = await fetch(
+        "https://api.greenstickusa.com/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: userData.username,
+            fullName: userData.fullName,
+            email: userData.email,
+            password: userData.password,
+            dateOfBirth: userData.dateOfBirth.toISOString().split("T")[0],
+            tosChecked: userData.tosChecked,
+            mailingListChecked: userData.mailingListChecked,
+            betaTestingChecked: userData.betaTestingChecked,
+          }),
+        }
+      );
       const responseData = await response.json();
 
       if (response.ok) {
         console.log("Registration successful");
-        onLogin(responseData); 
+        onLogin(responseData);
         onRegister();
         navigate("/pricing");
       } else {
@@ -97,14 +99,21 @@ const RegisterPage = ({ onLogin, onRegister }) => {
         </div>
       </div>
 
-      <div className="pt-32 pb-32 md:pb-36 lg:pb-44 md:pt-36 lg:pt-44 px-4 sm:px-6 lg:px-8 bg-white min-h-screen">
+      <div className="pt-32 md:pt-36 lg:pt-44 px-4 sm:px-6 lg:px-8 bg-white min-h-screen">
         <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl border-solid border-black border-2">
-          <h1 className="text-center text-4xl font-medium font-[Poppins] text-black mb-8">Join Greenstick</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <h1 className="text-center text-4xl font-medium font-[Poppins] text-black mb-8">
+            Join Greenstick
+          </h1>
+          <div >
             <div>
               <form onSubmit={handleRegister} className="space-y-6">
                 <div>
-                  <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                  <label
+                    htmlFor="username"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Username
+                  </label>
                   <input
                     id="username"
                     name="username"
@@ -116,7 +125,12 @@ const RegisterPage = ({ onLogin, onRegister }) => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                  <label
+                    htmlFor="fullName"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Full Name
+                  </label>
                   <input
                     id="fullName"
                     name="fullName"
@@ -128,7 +142,12 @@ const RegisterPage = ({ onLogin, onRegister }) => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Email
+                  </label>
                   <input
                     id="email"
                     name="email"
@@ -140,7 +159,12 @@ const RegisterPage = ({ onLogin, onRegister }) => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Password
+                  </label>
                   <input
                     id="password"
                     name="password"
@@ -152,7 +176,12 @@ const RegisterPage = ({ onLogin, onRegister }) => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                  <label
+                    htmlFor="dateOfBirth"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Date of Birth
+                  </label>
                   <DatePicker
                     id="dateOfBirth"
                     selected={userData.dateOfBirth}
@@ -170,9 +199,19 @@ const RegisterPage = ({ onLogin, onRegister }) => {
                       checked={userData.tosChecked}
                       onChange={handleCheckboxChange}
                       className="h-4 w-4 text-gs-dark-green focus:ring-gs-dark-green border-gray-300 rounded"
+                      required
                     />
-                    <label htmlFor="tosChecked" className="ml-2 block text-sm text-gray-900">
-                      I agree to the <a href="/termsofuse" className="text-gs-dark-green hover:underline">Terms of Service</a>
+                    <label
+                      htmlFor="tosChecked"
+                      className="ml-2 block text-sm text-gray-900"
+                    >
+                      I agree to the{" "}
+                      <a
+                        href="/termsofuse"
+                        className="text-gs-dark-green hover:underline"
+                      >
+                        Terms of Service
+                      </a>
                     </label>
                   </div>
                   <div className="flex items-center">
@@ -184,7 +223,10 @@ const RegisterPage = ({ onLogin, onRegister }) => {
                       onChange={handleCheckboxChange}
                       className="h-4 w-4 text-gs-dark-green focus:ring-gs-dark-green border-gray-300 rounded"
                     />
-                    <label htmlFor="mailingListChecked" className="ml-2 block text-sm text-gray-900">
+                    <label
+                      htmlFor="mailingListChecked"
+                      className="ml-2 block text-sm text-gray-900"
+                    >
                       Subscribe to our mailing list
                     </label>
                   </div>
@@ -197,7 +239,10 @@ const RegisterPage = ({ onLogin, onRegister }) => {
                       onChange={handleCheckboxChange}
                       className="h-4 w-4 text-gs-dark-green focus:ring-gs-dark-green border-gray-300 rounded"
                     />
-                    <label htmlFor="betaTestingChecked" className="ml-2 block text-sm text-gray-900">
+                    <label
+                      htmlFor="betaTestingChecked"
+                      className="ml-2 block text-sm text-gray-900"
+                    >
                       I want to participate in beta testing
                     </label>
                   </div>
@@ -209,29 +254,21 @@ const RegisterPage = ({ onLogin, onRegister }) => {
                   Create Account
                 </button>
               </form>
-            </div>
-            <div className="flex flex-col justify-center space-y-6">
-              <div className="text-center">
-                <p className="text-xl font-semibold mb-4">Or sign up with</p>
-                <div className="space-y-4">
-          <a
-            href="https://api.greenstickusa.com/api/auth/google"
-            className="w-full p-3 bg-white border border-gray-300 text-gray-700 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors duration-300"
-          >
-            <img src={googleIcon} alt="Google" className="h-6 w-6" />
-            <span>Google</span>
-          </a>
-        </div>
-              </div>
+              <div className="pt-8 flex flex-col justify-center space-y-6">
               <div className="text-center">
                 <p className="text-gray-600">
                   Already have an account?{" "}
-                  <Link to="/login" className="font-medium text-gs-dark-green hover:underline">
+                  <Link
+                    to="/login"
+                    className="font-medium text-gs-dark-green hover:underline"
+                  >
                     Log in
                   </Link>
                 </p>
               </div>
             </div>
+            </div>
+            
           </div>
         </div>
       </div>

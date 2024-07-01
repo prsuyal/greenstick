@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import gsLogoBlack from "../assets/images/logo-black.svg";
-import googleIcon from "../assets/images/icons8-google.svg";
-import appleIcon from "../assets/images/icons8-apple-logo.svg";
 import Footer from "../components/common/Footer";
 
 const LoginPage = ({ onLogin }) => {
@@ -63,7 +61,7 @@ const LoginPage = ({ onLogin }) => {
   };
 
   return (
-    <div className="relative min-h-screen bg-white">
+    <div className="flex flex-col relative min-h-screen bg-white">
       <div className="fixed top-0 left-0 w-full z-50 px-4 py-2 sm:py-3 bg-white border-y">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <img
@@ -89,10 +87,10 @@ const LoginPage = ({ onLogin }) => {
         </div>
       </div>
 
-      <div className="pt-32 pb-32 md:pb-36 lg:pb-44 md:pt-36 lg:pt-44 px-4 sm:px-6 lg:px-8 bg-white min-h-screen">
+      <div className="flex-grow pt-32 md:pt-36 lg:pt-44 px-4 sm:px-6 lg:px-8 bg-white min-h-screen">
         <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl border-solid border-black border-2">
           <h1 className="text-center text-4xl font-medium font-[Poppins] text-black mb-8">Login to Greenstick</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div >
             <div>
               <form onSubmit={handleLogin} className="space-y-6">
                 <div>
@@ -126,33 +124,7 @@ const LoginPage = ({ onLogin }) => {
                   Log in
                 </button>
               </form>
-              <button
-                onClick={handleForgotPassword}
-                className="mt-4 text-gs-dark-green hover:underline"
-              >
-                Forgot Password?
-              </button>
-            </div>
-            <div className="flex flex-col justify-center space-y-6">
-              <div className="text-center">
-                <p className="text-xl font-semibold mb-4">Or log in with</p>
-                <div className="space-y-4">
-                  <button
-                    onClick={() => (window.location.href = 'https://api.greenstickusa.com/api/auth/google')}
-                    className="w-full p-3 bg-white border border-gray-300 text-gray-700 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors duration-300"
-                  >
-                    <img src={googleIcon} alt="Google" className="h-6 w-6" />
-                    <span>Google</span>
-                  </button>
-                  <button
-                    onClick={() => (window.location.href = 'https://api.greenstickusa.com/api/auth/apple')}
-                    className="w-full p-3 bg-white border border-gray-300 text-gray-700 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-50 transition-colors duration-300"
-                  >
-                    <img src={appleIcon} alt="Apple" className="h-6 w-6" />
-                    <span>Apple</span>
-                  </button>
-                </div>
-              </div>
+              <div className="pt-8 flex flex-col justify-center space-y-6">
               <div className="text-center">
                 <p className="text-gray-600">
                   Don't have an account?{" "}
@@ -162,6 +134,8 @@ const LoginPage = ({ onLogin }) => {
                 </p>
               </div>
             </div>
+            </div>
+            
           </div>
         </div>
       </div>
