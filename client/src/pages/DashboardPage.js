@@ -53,7 +53,7 @@ const DashboardPage = ({ user, onLogout }) => {
           className="bg-gray-100 rounded-lg p-6 text-center"
         >
           <h2 className="text-4xl font-[Poppins] font-light mb-2">Your Plan</h2>
-          <p className="text-2xl font-[Poppins] font-bold mb-4">{currentUser.plan || "Standard"}</p>
+          <p className="text-2xl font-[Poppins] font-bold mb-4">{currentUser.plan || "None"}</p>
           <a 
             href="/pricing" 
             className="text-gs-dark-green hover:underline font-[Poppins] text-md"
