@@ -169,6 +169,17 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
                             </div>
                         ))}
                     </div>
+                    {isAuthenticated && (
+                        <div className="mt-8 text-center">
+                            <a
+                                href="#"
+                                onClick={() => navigate('/dashboard')}
+                                className="text-gs-dark-green hover:underline font-[Poppins]"
+                            >
+                                Continue without a plan
+                            </a>
+                        </div>
+                    )}
                 </div>
             </div>
 

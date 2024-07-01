@@ -93,6 +93,20 @@ const App = () => {
     console.log('Email confirmed');
   };
 
+  const fetchUpdatedUser = async (userId) => {
+    try {
+      const response = await fetch(`https://api.greenstickusa.com/api/users/${userId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch user');
+      }
+      const updatedUser = await response.json();
+      setUser(updatedUser); // Update user state
+      console.log('User updated:', updatedUser);
+    } catch (error) {
+      console.error('Error fetching updated user:', error);
+    }
+  };
+
   const AppWrapper = ({ children }) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -107,6 +121,7 @@ const App = () => {
       onLogin: handleLogin, 
       onRegister: handleEmailConfirmation, 
       onPayment: handlePayment, 
+      fetchUpdatedUser
     });
   };
 

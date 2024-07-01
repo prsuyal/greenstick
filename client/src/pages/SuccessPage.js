@@ -13,14 +13,15 @@ const SuccessPage = ({ user, fetchUpdatedUser }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate('/dashboard');
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <h1 className="text-4xl font-bold">Payment Successful!</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center font-[Poppins]">
+      <h1 className="text-4xl font-bold">Thanks!</h1>
+      <p className="text-xl mt-4">Redirecting in 3 seconds...</p>
     </div>
   );
 };
