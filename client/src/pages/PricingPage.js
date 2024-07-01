@@ -4,6 +4,8 @@ import gsLogoBlack from "../assets/images/logo-black.svg";
 import Footer from "../components/common/Footer";
 import stripePromise from "../utils/stripe";
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet';
+
 
 const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
     const navigate = useNavigate();
@@ -86,6 +88,10 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
     }, [checkoutSessionId]);
 
     return (
+        <>
+        <Helmet>
+        <title>Pricing - Greenstick</title>
+    </Helmet>
         <div className="flex flex-col min-h-screen bg-white">
             <div className="fixed top-0 left-0 w-full z-50 px-4 py-2 sm:py-3 bg-white border-y">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -194,6 +200,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
 
             <Footer />
         </div>
+        </>
     );
 };
 

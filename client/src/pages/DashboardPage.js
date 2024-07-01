@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import gsLogoBlack from "../assets/images/logo-black.svg";
 import CountdownTimer from "../components/CountdownTimer";
+import { Helmet } from 'react-helmet';
 
 const DashboardPage = ({ user, onLogout }) => {
   const [currentUser, setCurrentUser] = useState(user);
@@ -22,6 +23,10 @@ const DashboardPage = ({ user, onLogout }) => {
   }, []);
 
   return (
+    <>
+    <Helmet>
+        <title>Dashboard - Greenstick</title>
+    </Helmet>
     <div className="min-h-screen bg-white flex flex-col">
       <div className="fixed top-0 left-0 w-full z-50 px-4 py-2 sm:py-3 bg-white border-y">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -67,6 +72,7 @@ const DashboardPage = ({ user, onLogout }) => {
         <CountdownTimer />
       </div>
     </div>
+    </>
   );
 };
 

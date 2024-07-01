@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import gsLogoBlack from "../assets/images/logo-black.svg";
 import Footer from "../components/common/Footer";
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -112,6 +113,10 @@ const HelpPage = () => {
   ];
 
   return (
+    <>
+    <Helmet>
+        <title>Help - Greenstick</title>
+    </Helmet>
     <div className="relative min-h-screen bg-white">
       <div className="fixed top-0 left-0 w-full z-50 px-4 py-2 sm:py-3 bg-white border-y">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -156,6 +161,7 @@ const HelpPage = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 

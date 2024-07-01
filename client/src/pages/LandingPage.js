@@ -21,6 +21,8 @@ import XPAnimation from "../assets/animations/XP.json";
 import MindsetAnimation from "../assets/animations/Mindset.json";
 import CountdownTimer from "../components/CountdownTimer";
 import Footer from "../components/common/Footer";
+import { Helmet } from 'react-helmet';
+
 
 const LandingPage = () => {
   const svgRef = useRef(null);
@@ -158,6 +160,10 @@ const LandingPage = () => {
   }, [navigate]);
 
   return (
+    <>
+    <Helmet>
+        <title>Greenstick</title>
+    </Helmet>
     <div className="relative min-h-screen bg-white">
       {!animationComplete && (
         <div className="flex flex-col items-center justify-center h-screen">
@@ -470,6 +476,7 @@ const LandingPage = () => {
         <Footer/>
       </div>
     </div>
+    </>
   );
 };
 

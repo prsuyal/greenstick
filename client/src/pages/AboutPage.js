@@ -2,11 +2,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import gsLogoBlack from "../assets/images/logo-black.svg";
 import Footer from "../components/common/Footer";
+import { Helmet } from 'react-helmet';
 
 const AboutPage = () => {
   const navigate = useNavigate();
 
   return (
+    <>
+    <Helmet>
+        <title>About - Greenstick</title>
+    </Helmet>
     <div className="flex flex-col relative min-h-screen bg-white">
       <div className="fixed top-0 left-0 w-full z-50 px-4 py-2 sm:py-3 bg-white border-y">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -58,6 +63,7 @@ const AboutPage = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 
