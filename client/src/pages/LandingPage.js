@@ -291,16 +291,6 @@ const LandingPage = () => {
     Register
   </button>
                 </div>
-                <p className="text-sm mt-2">
-    Or,{" "}
-    <a 
-      href="https://api.greenstickusa.com/api/auth/google" 
-      className="text-black font-bold hover:underline"
-    >
-      click here
-    </a>{" "}
-    to sign up with Google.
-  </p>
               </div>
               <div className="mt-8 lg:mt-0 lg:ml-10 order-first lg:order-last">
                 <img

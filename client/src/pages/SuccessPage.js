@@ -1,12 +1,26 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const SuccessPage = () => {
+const SuccessPage = ({ user, fetchUpdatedUser }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user && user.id) {
+      fetchUpdatedUser(user.id);
+    }
+  }, [user, fetchUpdatedUser]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate('/dashboard');
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
   return (
-    <div>
-      <h1>Payment Successful!</h1>
-      <p>Thank you for your purchase. If you have any questions, please contact support at support@greenstickusa.com.</p>
-      <Link to="/dashboard">Go to Dashboard</Link>
+    <div className="min-h-screen flex items-center justify-center">
+      <h1 className="text-4xl font-bold">Payment Successful!</h1>
     </div>
   );
 };

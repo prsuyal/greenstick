@@ -45,7 +45,7 @@ const DashboardPage = ({ user, onLogout }) => {
           ref={greetingRef} 
           className="text-4xl sm:text-5xl md:text-6xl font-[Poppins] font-medium mb-12"
         >
-          Hello, {currentUser.full_name}
+          Hello, {currentUser.full_name}!
         </h1>
         
         <div 
