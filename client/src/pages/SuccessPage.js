@@ -6,17 +6,15 @@ const SuccessPage = ({ user, fetchUpdatedUser }) => {
 
   useEffect(() => {
     if (user && user.id) {
-      fetchUpdatedUser(user.id);
+      fetchUpdatedUser(user.id).then(() => {
+        const timer = setTimeout(() => {
+          navigate('/dashboard');
+        }, 3000);
+
+        return () => clearTimeout(timer);
+      });
     }
-  }, [user, fetchUpdatedUser]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      navigate('/dashboard');
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [navigate]);
+  }, [user, fetchUpdatedUser, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center font-[Poppins]">
