@@ -1,24 +1,29 @@
 const pool = require('../config/db');
 const bcrypt = require('bcryptjs');
 
-const createUser = async (email, password, authProvider, username, fullName, dateOfBirth) => {
+const createUser = async (email, password, authProvider, username, fullName, dateOfBirth, tosChecked, mailingListChecked, betaTestingChecked) => {
   try {
-    const existingUser = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-    if (existingUser.rows.length > 0) {
-      return existingUser.rows[0];
+    const existingEmail = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (existingEmail.rows.length > 0) {
+      throw new Error('Email already in use');
+    }
+
+    const existingUsername = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+    if (existingUsername.rows.length > 0) {
+      throw new Error('Username already taken');
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
     const { rows } = await pool.query(
       `INSERT INTO users 
-       (email, password, created_at, username, full_name, date_of_birth, current_level, streak, payment_status, subscription_id, plan, auth_provider, stripe_customer_id) 
-       VALUES ($1, $2, CURRENT_TIMESTAMP, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) 
+       (email, password, created_at, username, full_name, date_of_birth, current_level, streak, payment_status, subscription_id, plan, auth_provider, stripe_customer_id, tos_checked, mailing_list_checked, beta_testing_checked) 
+       VALUES ($1, $2, CURRENT_TIMESTAMP, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) 
        RETURNING *;`,
-      [email, hashedPassword, username, fullName, dateOfBirth, 1, 0, false, null, null, authProvider, null]
+      [email, hashedPassword, username, fullName, dateOfBirth, 1, 0, false, null, null, authProvider, null, tosChecked, mailingListChecked, betaTestingChecked]
     );
     return rows[0];
   } catch (error) {
-    throw new Error('Registration failed, please try again later.');
+    throw new Error(error.message);
   }
 };
 

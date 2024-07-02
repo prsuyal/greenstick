@@ -35,44 +35,44 @@ const RegisterPage = ({ onLogin, onRegister }) => {
   };
 
   const handleRegister = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const response = await fetch(
-        "https://api.greenstickusa.com/api/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: userData.username,
-            fullName: userData.fullName,
-            email: userData.email,
-            password: userData.password,
-            dateOfBirth: userData.dateOfBirth.toISOString().split("T")[0],
-            tosChecked: userData.tosChecked,
-            mailingListChecked: userData.mailingListChecked,
-            betaTestingChecked: userData.betaTestingChecked,
-          }),
-        }
-      );
-      const responseData = await response.json();
-
-      if (response.ok) {
-        console.log("Registration successful");
-        onLogin(responseData);
-        onRegister();
-        navigate("/pricing");
-      } else {
-        console.log("Registration failed:", responseData.message);
-        alert(responseData.message || "Registration failed");
+  try {
+    const response = await fetch(
+      "https://api.greenstickusa.com/api/auth/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: userData.username,
+          fullName: userData.fullName,
+          email: userData.email,
+          password: userData.password,
+          dateOfBirth: userData.dateOfBirth.toISOString().split("T")[0],
+          tosChecked: userData.tosChecked,
+          mailingListChecked: userData.mailingListChecked,
+          betaTestingChecked: userData.betaTestingChecked,
+        }),
       }
-    } catch (error) {
-      console.error("Request failed:", error);
-      alert("Network error, please try again later.");
+    );
+    const responseData = await response.json();
+
+    if (response.ok) {
+      console.log("Registration successful");
+      onLogin(responseData);
+      onRegister();
+      navigate("/pricing");
+    } else {
+      console.log("Registration failed:", responseData.message);
+      alert(responseData.message || "Registration failed");
     }
-  };
+  } catch (error) {
+    console.error("Request failed:", error);
+    alert("Network error, please try again later.");
+  }
+};
 
   return (
     <>

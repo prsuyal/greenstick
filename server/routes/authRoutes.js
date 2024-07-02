@@ -5,9 +5,9 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { createUser, loginUser, updateStripeCustomerId } = require('../models/userModel');
 
 router.post('/register', async (req, res) => {
-  const { username, fullName, email, password, dateOfBirth } = req.body;
+  const { username, fullName, email, password, dateOfBirth, tosChecked, mailingListChecked, betaTestingChecked } = req.body;
   try {
-    const newUser = await createUser(email, password, 'local', username, fullName, dateOfBirth);
+    const newUser = await createUser(email, password, 'local', username, fullName, dateOfBirth, tosChecked, mailingListChecked, betaTestingChecked);
     
     const customer = await stripe.customers.create({
       email: email,
@@ -24,8 +24,10 @@ router.post('/register', async (req, res) => {
     });
   } catch (error) {
     console.error('Error during registration:', error);
-    if (error.message === 'Email in use') {
+    if (error.message === 'Email already in use') {
       res.status(409).json({ message: 'Email already in use' });
+    } else if (error.message === 'Username already taken') {
+      res.status(409).json({ message: 'Username already taken' });
     } else {
       res.status(500).json({ message: 'Error registering new user.' });
     }
