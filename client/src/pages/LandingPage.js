@@ -23,7 +23,6 @@ import CountdownTimer from "../components/CountdownTimer";
 import Footer from "../components/common/Footer";
 import { Helmet } from 'react-helmet';
 
-
 const LandingPage = () => {
   const svgRef = useRef(null);
   const contentRef = useRef(null);
@@ -176,7 +175,7 @@ const LandingPage = () => {
             strokeLinecap="square"
             strokeMiterlimit="10"
             ref={svgRef}
-            className="w-1/2 sm:w-1/3 md:w-1/4 lg:-1/6"
+            className="w-3/4 sm:w-1/2 md:w-1/3 lg:w-1/4"
           >
             <clipPath id="p.0">
               <path
@@ -245,7 +244,7 @@ const LandingPage = () => {
               className="h-8 sm:h-10 md:h-12 cursor-pointer"
               onClick={() => navigate("/")}
             />
-            <div className="flex items-center space-x-2 sm:space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-2">
               {showRegisterInNav && (
                 <button
                   className="bg-black border-2 border-black text-white font-bold py-1 px-2 sm:px-3 sm:py-2 rounded-md hover:text-black hover:bg-white transition-colors duration-300"
@@ -271,31 +270,31 @@ const LandingPage = () => {
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-[Poppins] font-medium mt-12 lg:mt-0">
                   Introducing <span className="text-gs-dark-green">Green</span>stick
                 </h1>
-                <h2 className="mt-4 sm:mt-8 text-lg sm:text-xl md:text-2xl font-[Poppins] font-light">
+                <h2 className="mt-4 sm:mt-8 text-md sm:text-xl md:text-2xl font-[Poppins] font-light">
                   Building the best way to learn{" "}
                   <span ref={el} className="text-gs-dark-green font-medium"></span>
                 </h2>
                 <div className="relative mt-4 sm:mt-8 lg:w-10/12 xl:w-11/12" id="searchBar">
                 <input
-    type="email"
-    placeholder="Your email address"
-    className="pl-10 pr-8 py-3 sm:py-4 border-2 border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-gs-dark-green focus:border-gs-dark-green"
-    style={{
-      backgroundImage: `url(${emailIcon})`,
-      backgroundPosition: "12px center",
-      backgroundSize: "20px 20px",
-      backgroundRepeat: "no-repeat",
-    }}
-    value={email}
-    onChange={handleEmailChange}
-  />
-  <button
-    ref={registerButtonRef}
-    onClick={handleRegister}
-    className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black border-2 border-black text-white font-bold py-2 px-4 rounded-md hover:text-black hover:bg-white transition-colors duration-300"
-  >
-    Register
-  </button>
+                  type="email"
+                  placeholder="Your email address"
+                  className="text-sm pl-10 pr-8 py-3 sm:py-4 border-2 border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-gs-dark-green focus:border-gs-dark-green"
+                  style={{
+                    backgroundImage: `url(${emailIcon})`,
+                    backgroundPosition: "12px center",
+                    backgroundSize: "20px 20px",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                  value={email}
+                  onChange={handleEmailChange}
+                />
+                <button
+                  ref={registerButtonRef}
+                  onClick={handleRegister}
+                  className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black border-2 border-black text-white font-bold py-1 px-2 sm:px-3 sm:py-2 rounded-md hover:text-black hover:bg-white transition-colors duration-300"
+                >
+                  Register
+                </button>
                 </div>
               </div>
               <div className="mt-8 lg:mt-0 lg:ml-10 order-first lg:order-last">
@@ -318,7 +317,7 @@ const LandingPage = () => {
                     An all-in-one solution.
                   </h3>
                   <p className="mt-4 sm:mt-6 text-lg sm:text-xl md:text-2xl font-[Poppins] font-light">
-                  From interactive lessons to practical trading simulations and more, Greenstick equips you with everything you’ll need to succeed on the stock market. 
+                    From interactive lessons to practical trading simulations and more, Greenstick equips you with everything you’ll need to succeed on the stock market. 
                   </p>
                   <button 
                     onClick={() => navigate("/register")}
@@ -328,7 +327,7 @@ const LandingPage = () => {
                   </button>
                 </div>
                 <div className="mt-8 lg:mt-0 lg:w-1/2">
-                  <Lottie isClickToPauseDisabled={true} options={defaultOptions} height={400} width={400} />
+                  <Lottie isClickToPauseDisabled={true} options={defaultOptions} height={300} width={300} />
                 </div>
               </div>
             </div>
@@ -338,27 +337,27 @@ const LandingPage = () => {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 text-center">
                 <div className="flex flex-col items-center">
                   <img src={data} alt="Paper Money Trading" className="h-12 mb-2" />
-                  <div className="font-[Poppins]">Paper Money Trading</div>
+                  <div className="font-[Poppins] text-xs sm:text-sm md:text-base">Paper Money Trading</div>
                 </div>
                 <div className="flex flex-col items-center">
                   <img src={personalized} alt="Personalized Feedback" className="h-12 mb-2" />
-                  <div className="font-[Poppins]">Personalized Feedback</div>
+                  <div className="font-[Poppins] text-xs sm:text-sm md:text-base">Personalized Feedback</div>
                 </div>
                 <div className="flex flex-col items-center">
                   <img src={candlestick} alt="Market Insights" className="h-12 mb-2" />
-                  <div className="font-[Poppins]">Market Insights</div>
+                  <div className="font-[Poppins] text-xs sm:text-sm md:text-base">Market Insights</div>
                 </div>
                 <div className="flex flex-col items-center">
                   <img src={wallet} alt="Structured Lessons" className="h-12 mb-2" />
-                  <div className="font-[Poppins]">Structured Lessons</div>
+                  <div className="font-[Poppins] text-xs sm:text-sm md:text-base">Structured Lessons</div>
                 </div>
                 <div className="flex flex-col items-center">
                   <img src={network} alt="AI-Powered Strategies" className="h-12 mb-2" />
-                  <div className="font-[Poppins]">AI-Powered Strategies</div>
+                  <div className="font-[Poppins] text-xs sm:text-sm md:text-base">AI-Powered Strategies</div>
                 </div>
                 <div className="flex flex-col items-center">
                   <img src={learning} alt="All skill levels" className="h-12 mb-2" />
-                  <div className="font-[Poppins]">All Skill Levels</div>
+                  <div className="font-[Poppins] text-xs sm:text-sm md:text-base">All Skill Levels</div>
                 </div>
               </div>
             </div>
@@ -388,8 +387,8 @@ const LandingPage = () => {
                       preserveAspectRatio: "xMidYMid slice",
                     },
                   }} 
-                  height={400} 
-                  width={400} />
+                  height={300} 
+                  width={300} />
                 </div>
               </div>
             </div>
