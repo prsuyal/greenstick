@@ -18,8 +18,8 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
             monthlyPrice: 20,
             yearlyPrice: 200,
             features: ['Levels 1-6', 'Paper money trading', 'Exo 1.0 trial'],
-            monthlyPriceId: 'price_1PKOsm2KoGC9FXDg42Tta0JW',
-            yearlyPriceId: 'price_1PKOsm2KoGC9FXDgJi4UOohD',
+            monthlyPriceId: 'price_1PXvWF2KoGC9FXDgwDBzvzPj',
+            yearlyPriceId: 'price_1PXvWd2KoGC9FXDg6uDjUcck',
         },
         {
             name: 'Pro',
@@ -27,8 +27,8 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
             monthlyPrice: 28,
             yearlyPrice: 280,
             features: ['Quizzes for optimal retention', 'Bonus lessons', 'Exo 1.0'],
-            monthlyPriceId: 'price_1PKOtk2KoGC9FXDgtU7cuYnO',
-            yearlyPriceId: 'price_1PKOtk2KoGC9FXDgn2CGgXR5',
+            monthlyPriceId: 'price_1PXvXF2KoGC9FXDgQ8xGpC9P',
+            yearlyPriceId: 'price_1PXvXP2KoGC9FXDgK1hLoSA3',
         },
         {
             name: 'Ultimate',
@@ -36,8 +36,8 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
             monthlyPrice: 36,
             yearlyPrice: 360,
             features: ['Weekly reviews', 'Early access to beta features', 'Exo 1.5'],
-            monthlyPriceId: 'price_1PKOu72KoGC9FXDgT425OKJ3',
-            yearlyPriceId: 'price_1PKOub2KoGC9FXDgKKR0cUa1',
+            monthlyPriceId: 'price_1PXvXn2KoGC9FXDgBs3OOVNi',
+            yearlyPriceId: 'price_1PXvY02KoGC9FXDgIQFabFb8',
         },
     ];
 

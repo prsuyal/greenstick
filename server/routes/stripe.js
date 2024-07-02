@@ -63,20 +63,20 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
         if (user) {
           let planName;
           switch (priceId) {
-            case 'price_1PKOtk2KoGC9FXDgtU7cuYnO':
-            case 'price_1PKOtk2KoGC9FXDgn2CGgXR5':
+            case 'price_1PXvXF2KoGC9FXDgQ8xGpC9P':
+            case 'price_1PXvXP2KoGC9FXDgK1hLoSA3':
               planName = 'Pro';
               break;
-            case 'price_1PKOsm2KoGC9FXDg42Tta0JW':
-            case 'price_1PKOsm2KoGC9FXDgJi4UOohD':
+            case 'price_1PXvWF2KoGC9FXDgwDBzvzPj':
+            case 'price_1PXvWd2KoGC9FXDg6uDjUcck':
               planName = 'Standard';
               break;
-            case 'price_1PKOu72KoGC9FXDgT425OKJ3':
-            case 'price_1PKOub2KoGC9FXDgKKR0cUa1':
+            case 'price_1PXvXn2KoGC9FXDgBs3OOVNi':
+            case 'price_1PXvY02KoGC9FXDgIQFabFb8':
               planName = 'Ultimate';
               break;
             default:
-              planName = 'Standard';
+              planName = 'None';
           }
 
           await updateUserPaymentStatus(user.id, true, session.subscription, planName);
