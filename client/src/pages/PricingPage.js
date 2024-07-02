@@ -176,7 +176,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
                                     ))}
                                 </ul>
                                 <button
-                                    className="bg-gs-light-green text-white font-medium py-2 px-4 rounded hover:bg-gs-dark-green transition-colors duration-300"
+                                    className="bg-gs-dark-green text-white font-medium py-2 px-4 rounded hover:bg-black transition-colors duration-300"
                                     onClick={() => handleSubscribe(plan)}
                                 >
                                     Subscribe
