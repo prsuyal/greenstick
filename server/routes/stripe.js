@@ -16,7 +16,7 @@ router.post('/create-checkout-session', async (req, res) => {
     console.log(`User found: ${JSON.stringify(user)}`);
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card', 'apple_pay', 'google_pay'],
+      payment_method_types: ['card'],
       line_items: [
         {
           price: priceId,
@@ -29,7 +29,6 @@ router.post('/create-checkout-session', async (req, res) => {
       cancel_url: `${process.env.DOMAIN}/canceled`,
       client_reference_id: userId,
       customer: user.stripe_customer_id,
-      ui_mode: 'embedded',
     });
 
     res.json({ id: session.id });
