@@ -25,14 +25,14 @@ const RegisterPage = ({ onLogin, onRegister }) => {
 
   useEffect(() => {
     const today = new Date();
-    const age = today.getFullYear() - userData.dateOfBirth.getFullYear();
-    const monthDifference = today.getMonth() - userData.dateOfBirth.getMonth();
-    if (
-      monthDifference < 0 ||
-      (monthDifference === 0 && today.getDate() < userData.dateOfBirth.getDate())
-    ) {
+    const birthDate = new Date(userData.dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
+
     setIsUnder18(age < 18);
   }, [userData.dateOfBirth]);
 
@@ -213,6 +213,10 @@ const RegisterPage = ({ onLogin, onRegister }) => {
                       onChange={handleDateChange}
                       dateFormat="MMMM d, yyyy"
                       className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gs-dark-green focus:border-gs-dark-green"
+                      maxDate={new Date()}
+                      showYearDropdown
+                      showMonthDropdown
+                      dropdownMode="select"
                     />
                   </div>
                   <div className="space-y-2">
