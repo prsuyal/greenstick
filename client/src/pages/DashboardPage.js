@@ -45,7 +45,7 @@ const DashboardPage = ({ user, onLogout }) => {
         </div>
       </div>
 
-      <div className="mb-24 md:mb-32 lg:mb-36 flex-grow pt-32 md:pt-36 lg:pt-44 flex items-center justify-center px-4">
+      <div className="mb-24 md:mb-32 lg:mb-36 flex-grow pt-32 md:pt-36 lg:pt-44 flex flex-col items-center justify-center px-4">
         <h1 
           ref={greetingRef} 
           className="text-4xl sm:text-5xl md:text-6xl font-[Poppins] font-medium mb-12"
