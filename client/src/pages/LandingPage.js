@@ -60,7 +60,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     const options = {
-      strings: ["trading", "crypto", "stocks", "options", "futures"],
+      strings: ["trading", "stocks", "options", "futures"],
       typeSpeed: 50,
       backSpeed: 50,
       loop: true,

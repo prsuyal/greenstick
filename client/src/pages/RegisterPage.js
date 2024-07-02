@@ -105,7 +105,7 @@ const RegisterPage = ({ onLogin, onRegister }) => {
         </div>
       </div>
 
-      <div className="pt-32 md:pt-36 lg:pt-44 px-4 sm:px-6 lg:px-8 bg-white min-h-screen">
+      <div className="mb-24 md:mb-32 lg:mb-36 pt-32 md:pt-36 lg:pt-44 px-4 sm:px-6 lg:px-8 bg-white min-h-screen">
         <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl border-solid border-black border-2">
           <h1 className="text-center text-4xl font-medium font-[Poppins] text-black mb-8">
             Join Greenstick

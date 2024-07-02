@@ -106,7 +106,7 @@ const HelpPage = () => {
         },
         {
           question: "Is there a community I can join?",
-          answer: "Once Greenstick is released, there will be! You will become a part of a group of like-minded people, all with one goal: to increase their knowledge."
+          answer: "Once Greenstick is released, there will be! You will become a part of a group of like-minded people, all with one goal: to increase their knowledge about the stock market."
         }
       ]
     }
