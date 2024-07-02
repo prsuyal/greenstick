@@ -48,7 +48,7 @@ const Footer = () => {
                             <a href="/privacypolicy" className="hover:text-gs-dark-green">Privacy policy</a>
                         </div>
                         <div>
-                            © 2024 Greenstick LLC. Greenstick and the Greenstick Logo are trademarks of Greenstick LLC.
+                            © 2024 Greenstick LLC.
                         </div>
                     </div>
                 </div>
