@@ -15,13 +15,8 @@ router.post('/create-checkout-session', async (req, res) => {
     }
     console.log(`User found: ${JSON.stringify(user)}`);
 
-    if (!user.address) {
-      console.log(`User address is required for tax calculation`);
-      return res.status(400).json({ error: 'User address is required for tax calculation' });
-    }
-    
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+      payment_method_types: ['card', 'apple_pay', 'google_pay'],
       line_items: [
         {
           price: priceId,
@@ -30,25 +25,12 @@ router.post('/create-checkout-session', async (req, res) => {
       ],
       mode: 'subscription',
       allow_promotion_codes: true,
-      billing_address_collection: 'required',
-      automatic_tax: {
-        enabled: true,
-      },
+      billing_address_collection: 'auto',
       success_url: `${process.env.DOMAIN}/success`,
       cancel_url: `${process.env.DOMAIN}/canceled`,
       client_reference_id: userId,
       customer: user.stripe_customer_id,
-      customer_details: {
-        email: user.email,
-        address: {
-          line1: user.address.line1,
-          line2: user.address.line2,
-          city: user.address.city,
-          state: user.address.state,
-          postal_code: user.address.postal_code,
-          country: user.address.country,
-        },
-      },
+      ui_mode: 'embedded',
     });
 
     res.json({ id: session.id });
