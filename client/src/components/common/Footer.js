@@ -37,6 +37,9 @@ const Footer = () => {
                             <a href="https://www.instagram.com/greenstick_official" target="_blank" rel="noopener noreferrer" className="hover:text-gs-dark-green">
                                 <i className="fab fa-instagram"></i>
                             </a>
+                            <a href="https://www.tiktok.com/@greenstickofficial" target="_blank" rel="noopener noreferrer" className="hover:text-gs-dark-green">
+                                <i className="fab fa-tiktok"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
