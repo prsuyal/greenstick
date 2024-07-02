@@ -26,12 +26,11 @@ router.post('/create-checkout-session', async (req, res) => {
       mode: 'subscription',
       allow_promotion_codes: true,
       billing_address_collection: 'required',
-      automatic_tax: { enabled: true }, 
       success_url: `${process.env.DOMAIN}/success`,
       cancel_url: `${process.env.DOMAIN}/canceled`,
       client_reference_id: userId,
       customer: user.stripe_customer_id,
-      receipt_email: user.email
+      receipt_email: user.email,
     });
 
     res.json({ id: session.id });
