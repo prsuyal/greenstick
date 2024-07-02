@@ -25,15 +25,18 @@ router.post('/create-checkout-session', async (req, res) => {
       ],
       mode: 'subscription',
       allow_promotion_codes: true,
+      billing_address_collection: 'required',
+      automatic_tax: { enabled: true }, 
       success_url: `${process.env.DOMAIN}/success`,
       cancel_url: `${process.env.DOMAIN}/canceled`,
       client_reference_id: userId,
       customer: user.stripe_customer_id,
+      receipt_email: user.email
     });
 
     res.json({ id: session.id });
   } catch (error) {
-    console.error('Error creating checkout session:', error);
+    console.error('Error creating checkout session:', error); 
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
@@ -106,20 +109,20 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
 
         let planName;
         switch (priceId) {
-          case 'price_1PKOtk2KoGC9FXDgtU7cuYnO':
-          case 'price_1PKOtk2KoGC9FXDgn2CGgXR5':
-            planName = 'Pro';
-            break;
-          case 'price_1PKOsm2KoGC9FXDg42Tta0JW':
-          case 'price_1PKOsm2KoGC9FXDgJi4UOohD':
-            planName = 'Standard';
-            break;
-          case 'price_1PKOu72KoGC9FXDgT425OKJ3':
-          case 'price_1PKOub2KoGC9FXDgKKR0cUa1':
-            planName = 'Ultimate';
-            break;
-          default:
-            planName = 'Standard';
+          case 'price_1PXvXF2KoGC9FXDgQ8xGpC9P':
+            case 'price_1PXvXP2KoGC9FXDgK1hLoSA3':
+              planName = 'Pro';
+              break;
+            case 'price_1PXvWF2KoGC9FXDgwDBzvzPj':
+            case 'price_1PXvWd2KoGC9FXDg6uDjUcck':
+              planName = 'Standard';
+              break;
+            case 'price_1PXvXn2KoGC9FXDgBs3OOVNi':
+            case 'price_1PXvY02KoGC9FXDgIQFabFb8':
+              planName = 'Ultimate';
+              break;
+            default:
+              planName = 'None';
         }
 
         await updateUserPaymentStatus(user.id, true, subscriptionId, planName);
