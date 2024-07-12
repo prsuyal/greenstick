@@ -336,8 +336,8 @@ const LandingPage = () => {
             <div className="pt-8 pb-8 text-black">
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 text-center">
                 <div className="flex flex-col items-center">
-                  <img src={data} alt="Paper Money Trading" className="h-12 mb-2" />
-                  <div className="font-[Poppins] text-xs sm:text-sm md:text-base">Paper Money Trading</div>
+                  <img src={data} alt="Practical Simulations" className="h-12 mb-2" />
+                  <div className="font-[Poppins] text-xs sm:text-sm md:text-base">Practical Simulations</div>
                 </div>
                 <div className="flex flex-col items-center">
                   <img src={personalized} alt="Personalized Feedback" className="h-12 mb-2" />

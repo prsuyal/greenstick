@@ -77,10 +77,6 @@ const HelpPage = () => {
           {
             question: "What are Exo 1.0 and Exo 1.5?",
             answer: "Exo 1.0 is the original version of Exo: your personal guide to the stock market and any questions you may have, as well as fully integrated with Greenstick. Exo 1.5 is the next generation of Exo: stronger, faster, and better at offering unique advice."
-          },
-          {
-            question: "What is “paper money” trading?",
-            answer: "Built into Greenstick is a paper money trading system that allows you to trade on the live stock market using fake, or “paper,” money. Paper money trading allows you to learn actively and put your knowledge to the test without any of the risks inherent to trading with real money."
           }
         ]
       },
