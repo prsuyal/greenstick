@@ -14,6 +14,8 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import DashboardPage from './pages/DashboardPage';
 import SuccessPage from './pages/SuccessPage';
 import CanceledPage from './pages/CanceledPage';
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
