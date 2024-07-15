@@ -144,6 +144,8 @@ const App = () => {
         <Route path="/canceled" element={<AppWrapper><CanceledPage /></AppWrapper>} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
+      <Analytics />
+      <SpeedInsights />
     </Router>
   );
 };
