@@ -20,6 +20,7 @@ const RegisterPage = ({ onLogin, onRegister }) => {
     parentalApprovalChecked: false,
   });
   const [isUnder18, setIsUnder18] = useState(false);
+  const [isUnder13, setIsUnder13] = useState(false);
 
   const navigate = useNavigate();
 
@@ -34,6 +35,7 @@ const RegisterPage = ({ onLogin, onRegister }) => {
     }
 
     setIsUnder18(age < 18);
+    setIsUnder13(age < 13);
   }, [userData.dateOfBirth]);
 
   const handleChange = (e) => {
@@ -50,6 +52,11 @@ const RegisterPage = ({ onLogin, onRegister }) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    if (isUnder13) {
+      alert("You must be at least 13 years old to register.");
+      return;
+    }
 
     if (isUnder18 && !userData.parentalApprovalChecked) {
       alert("You must have parental approval to sign up if you are under 18.");
