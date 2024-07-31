@@ -14,6 +14,7 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import DashboardPage from './pages/DashboardPage';
 import SuccessPage from './pages/SuccessPage';
 import CanceledPage from './pages/CanceledPage';
+import ExoPage from './pages/ExoPage';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -42,7 +43,7 @@ const App = () => {
     setIsEmailConfirmed(userData.isEmailConfirmed || false);
     localStorage.setItem('user', JSON.stringify(userData));
     console.log('User logged in:', userData);
-  };
+  }; 
 
   const handleLogout = async (navigate, currentPath) => {
     try {
@@ -123,7 +124,7 @@ const App = () => {
       onPayment: handlePayment, 
       fetchUpdatedUser
     });
-  };
+  }; 
 
   return (
     <Router>
@@ -140,6 +141,7 @@ const App = () => {
         <Route path="/dashboard" element={isAuthenticated ? <AppWrapper><DashboardPage /></AppWrapper> : <Navigate to="/login" />} />
         <Route path="/success" element={<AppWrapper><SuccessPage /></AppWrapper>} />
         <Route path="/canceled" element={<AppWrapper><CanceledPage /></AppWrapper>} />
+        <Route path="/exo" element={<AppWrapper><ExoPage /></AppWrapper>} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>
