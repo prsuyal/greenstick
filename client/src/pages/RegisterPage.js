@@ -86,16 +86,13 @@ const RegisterPage = ({ onLogin, onRegister }) => {
       const responseData = await response.json();
 
       if (response.ok) {
-        console.log("Registration successful");
         onLogin(responseData);
         onRegister();
         navigate("/pricing");
       } else {
-        console.log("Registration failed:", responseData.message);
         alert(responseData.message || "Registration failed");
       }
     } catch (error) {
-      console.error("Request failed:", error);
       alert("Network error, please try again later.");
     }
   };

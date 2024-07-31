@@ -45,7 +45,6 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
         if (!isAuthenticated) {
           navigate('/register');
         } else {
-          console.log('User before subscribing:', user);
           try {
             const response = await fetch('https://api.greenstickusa.com/api/stripe/create-checkout-session', {
               method: 'POST',
@@ -61,7 +60,6 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
             const session = await response.json();
             if (response.ok) {
               setCheckoutSessionId(session.id);
-              console.log('Checkout session created:', session);
             } else {
               console.error('Failed to create checkout session:', session);
             }
