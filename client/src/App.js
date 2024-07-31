@@ -31,9 +31,6 @@ const App = () => {
       setUser(userData);
       setHasPaid(userData.hasPaid || false);
       setIsEmailConfirmed(userData.isEmailConfirmed || false);
-      console.log('Stored user data:', userData);
-    } else {
-      console.log('No stored user data found.');
     }
   }, []);
 
@@ -43,19 +40,16 @@ const App = () => {
     setHasPaid(userData.hasPaid || false);
     setIsEmailConfirmed(userData.isEmailConfirmed || false);
     localStorage.setItem('user', JSON.stringify(userData));
-    console.log('User logged in:', userData);
   };
 
   const handleLogout = async (navigate, currentPath) => {
     try {
-      console.log('Logging out...');
       const response = await fetch('https://api.greenstickusa.com/api/auth/logout', {
         method: 'POST',
         credentials: 'include',
       });
 
       if (response.ok) {
-        console.log('Logout successful');
         setIsAuthenticated(false);
         setUser(null);
         setHasPaid(false);
@@ -86,13 +80,11 @@ const App = () => {
   const handlePayment = () => {
     setHasPaid(true);
     localStorage.setItem('hasPaid', 'true');
-    console.log('Payment completed');
   };
 
   const handleEmailConfirmation = () => {
     setIsEmailConfirmed(true);
     localStorage.setItem('isEmailConfirmed', 'true');
-    console.log('Email confirmed');
   };
 
   const fetchUpdatedUser = async (userId) => {
@@ -102,8 +94,7 @@ const App = () => {
         throw new Error('Failed to fetch user');
       }
       const updatedUser = await response.json();
-      setUser(updatedUser); // Update user state
-      console.log('User updated:', updatedUser);
+      setUser(updatedUser);
     } catch (error) {
       console.error('Error fetching updated user:', error);
     }

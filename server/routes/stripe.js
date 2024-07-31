@@ -7,13 +7,10 @@ router.post('/create-checkout-session', async (req, res) => {
   const { priceId, userId } = req.body;
 
   try {
-    console.log(`Received priceId: ${priceId}, userId: ${userId}`);
     const user = await getUserById(userId);
     if (!user) {
-      console.log(`No user found with ID: ${userId}`);
       return res.status(404).json({ error: 'User not found' });
     }
-    console.log(`User found: ${JSON.stringify(user)}`);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -60,7 +57,6 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
 
       try {
         await updateStripeCustomerId(session.client_reference_id, session.customer);
-        console.log('Stripe customer ID updated successfully.');
 
         const subscription = await stripe.subscriptions.retrieve(session.subscription);
         const priceId = subscription.items.data[0].price.id;
@@ -86,7 +82,6 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
           }
 
           await updateUserPaymentStatus(user.id, true, session.subscription, planName);
-          console.log('User payment status updated successfully.');
         }
       } catch (error) {
         console.error(`Error updating user: ${error.message}`);
@@ -101,13 +96,8 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
         const subscription = await stripe.subscriptions.retrieve(subscriptionId);
         const priceId = subscription.items.data[0].price.id;
 
-        console.log('Invoice payment succeeded:', invoice);
-        console.log('Subscription details:', subscription);
-        console.log('Price ID:', priceId);
-
         const stripeCustomerId = invoice.customer;
         const user = await getUserByStripeCustomerId(stripeCustomerId);
-        console.log(`User found: ${JSON.stringify(user)}`);
 
         let planName;
         switch (priceId) {
@@ -132,9 +122,6 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
         console.error(`Error updating user: ${error.message}`);
       }
       break;
-
-    default:
-      console.log(`Unhandled event type ${event.type}`);
   }
 
   res.json({ received: true });

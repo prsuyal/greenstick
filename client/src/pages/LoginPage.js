@@ -26,15 +26,12 @@ const LoginPage = ({ onLogin }) => {
       });
       const responseData = await response.json();
       if (response.ok) {
-        console.log('Login successful', responseData);
         onLogin(responseData.user); 
         navigate("/dashboard");
       } else {
-        console.log('Login failed:', responseData.message);
         alert(responseData.message || "Failed to log in");
       }
     } catch (error) {
-      console.error('Network request failed:', error);
       alert("Network error, please try again later.");
     }
   };  
@@ -52,11 +49,9 @@ const LoginPage = ({ onLogin }) => {
         if (response.ok) {
           alert("Password reset link has been sent to your email.");
         } else {
-          console.log('Password reset failed:', responseData.message);
           alert(responseData.message || "Failed to send password reset link.");
         }
       } catch (error) {
-        console.error('Network request failed:', error);
         alert("Network error, please try again later.");
       }
     }

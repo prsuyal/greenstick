@@ -14,8 +14,6 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  console.log('Webhook event received:', event);
-
   switch (event.type) {
     case 'checkout.session.completed':
       const session = event.data.object;
@@ -38,9 +36,6 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
       }
 
       break;
-
-    default:
-      console.log(`Unhandled event type ${event.type}`);
   }
 
   res.status(200).json({ received: true });
