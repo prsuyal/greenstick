@@ -16,6 +16,10 @@ import SuccessPage from './pages/SuccessPage';
 import CanceledPage from './pages/CanceledPage';
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import CheckEmailPage from './pages/CheckEmailPage';
+import VerifyEmailPage from './pages/VerifyEmailPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage.js'; 
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -133,6 +137,10 @@ const App = () => {
         <Route path="/dashboard" element={isAuthenticated ? <AppWrapper><DashboardPage /></AppWrapper> : <Navigate to="/login" />} />
         <Route path="/success" element={<AppWrapper><SuccessPage /></AppWrapper>} />
         <Route path="/canceled" element={<AppWrapper><CanceledPage /></AppWrapper>} />
+        <Route path="/check-email" element={<AppWrapper><CheckEmailPage /></AppWrapper>} />
+        <Route path="/verify-email/:token" element={<AppWrapper><VerifyEmailPage /></AppWrapper>} />
+        <Route path="/forgot-password" element={<AppWrapper><ForgotPasswordPage /></AppWrapper>} />
+        <Route path="/reset-password/:token" element={<AppWrapper><ResetPasswordPage /></AppWrapper>} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
       <Analytics />
