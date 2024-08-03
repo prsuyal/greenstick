@@ -127,4 +127,25 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
   res.json({ received: true });
 });
 
+router.post('/create-customer-portal-session', async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+    const user = await getUserById(userId);
+    if (!user || !user.stripe_customer_id) {
+      return res.status(404).json({ error: 'User not found or Stripe customer ID missing' });
+    }
+
+    const session = await stripe.billingPortal.sessions.create({
+      customer: user.stripe_customer_id,
+      return_url: `${process.env.DOMAIN}/dashboard`,
+    });
+
+    res.json({ url: session.url });
+  } catch (error) {
+    console.error('Error creating customer portal session:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 module.exports = router;

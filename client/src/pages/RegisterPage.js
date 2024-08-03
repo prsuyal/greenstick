@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import gsLogoBlack from "../assets/images/logo-black.svg";
 import Footer from "../components/common/Footer";
 import { Helmet } from 'react-helmet';
+import ErrorMessage from "../components/ErrorMessage";
 
 const RegisterPage = ({ onLogin, onRegister }) => {
   const location = useLocation();
@@ -21,8 +23,11 @@ const RegisterPage = ({ onLogin, onRegister }) => {
   });
   const [isUnder18, setIsUnder18] = useState(false);
   const [isUnder13, setIsUnder13] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
 
   const navigate = useNavigate();
+  const recaptchaRef = useRef();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     const today = new Date();
@@ -50,19 +55,38 @@ const RegisterPage = ({ onLogin, onRegister }) => {
     setUserData({ ...userData, [e.target.name]: e.target.checked });
   };
 
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
-
+  
+    const recaptchaValue = recaptchaRef.current.getValue();
+    if (!recaptchaValue) {
+      setErrorMessage("Please complete the reCAPTCHA");
+      return;
+    }
+  
     if (isUnder13) {
-      alert("You must be at least 13 years old to register.");
+      setErrorMessage("You must be at least 13 years old to register.");
+      recaptchaRef.current.reset();
       return;
     }
-
+  
     if (isUnder18 && !userData.parentalApprovalChecked) {
-      alert("You must have parental approval to sign up if you are under 18.");
+      setErrorMessage("You must have parental approval to sign up if you are under 18.");
+      recaptchaRef.current.reset();
       return;
     }
-
+  
+    if (!validatePassword(userData.password)) {
+      setErrorMessage("Password must be at least 8 characters long, include one uppercase letter, one number, and one special character.");
+      recaptchaRef.current.reset();
+      return;
+    }
+  
     try {
       const response = await fetch(
         "https://api.greenstickusa.com/api/auth/register",
@@ -80,20 +104,22 @@ const RegisterPage = ({ onLogin, onRegister }) => {
             tosChecked: userData.tosChecked,
             mailingListChecked: userData.mailingListChecked,
             betaTestingChecked: userData.betaTestingChecked,
+            recaptchaToken: recaptchaValue,
           }),
         }
       );
       const responseData = await response.json();
-
+  
       if (response.ok) {
-        onLogin(responseData);
         onRegister();
-        navigate("/pricing");
+        navigate("/check-email", { state: { email: userData.email } });
       } else {
-        alert(responseData.message || "Registration failed");
+        setErrorMessage(responseData.message || "Registration failed");
+        recaptchaRef.current.reset();
       }
     } catch (error) {
-      alert("Network error, please try again later.");
+      setErrorMessage("Network error, please try again later.");
+      recaptchaRef.current.reset();
     }
   };
 
@@ -133,6 +159,12 @@ const RegisterPage = ({ onLogin, onRegister }) => {
             <h1 className="text-center text-4xl font-medium font-[Poppins] text-black mb-8">
               Join Greenstick
             </h1>
+            {errorMessage && (
+    <ErrorMessage 
+      message={errorMessage}
+      onClose={() => setErrorMessage(null)}
+    />
+  )}
             <div>
               <div>
                 <form onSubmit={handleRegister} className="space-y-6">
@@ -203,6 +235,9 @@ const RegisterPage = ({ onLogin, onRegister }) => {
                       onChange={handleChange}
                       className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gs-dark-green focus:border-gs-dark-green"
                     />
+                    {passwordError && (
+                      <p className="text-red-500 text-sm mt-2">{passwordError}</p>
+                    )}
                   </div>
                   <div>
                     <label
@@ -299,6 +334,10 @@ const RegisterPage = ({ onLogin, onRegister }) => {
                       </div>
                     )}
                   </div>
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey='6LfiZh4qAAAAAC0VLWt_g9jiXZ7gNkW47Of2MhA3'
+                  />
                   <button
                     type="submit"
                     className="w-full p-3 bg-gs-light-green text-white rounded-md hover:bg-gs-dark-green transition-colors duration-300 font-semibold"
