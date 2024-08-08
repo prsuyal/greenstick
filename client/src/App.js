@@ -14,6 +14,7 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import DashboardPage from './pages/DashboardPage';
 import SuccessPage from './pages/SuccessPage';
 import CanceledPage from './pages/CanceledPage';
+import ExoPage from './pages/ExoPage';
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import CheckEmailPage from './pages/CheckEmailPage';
@@ -44,7 +45,7 @@ const App = () => {
     setHasPaid(userData.hasPaid || false);
     setIsEmailConfirmed(userData.isEmailConfirmed || false);
     localStorage.setItem('user', JSON.stringify(userData));
-  };
+=  };
 
   const handleLogout = async (navigate, currentPath) => {
     try {
@@ -120,7 +121,7 @@ const App = () => {
       onPayment: handlePayment, 
       fetchUpdatedUser
     });
-  };
+  }; 
 
   return (
     <Router>
@@ -137,6 +138,7 @@ const App = () => {
         <Route path="/dashboard" element={isAuthenticated ? <AppWrapper><DashboardPage /></AppWrapper> : <Navigate to="/login" />} />
         <Route path="/success" element={<AppWrapper><SuccessPage /></AppWrapper>} />
         <Route path="/canceled" element={<AppWrapper><CanceledPage /></AppWrapper>} />
+        <Route path="/exo" element={<AppWrapper><ExoPage /></AppWrapper>} />
         <Route path="/check-email" element={<AppWrapper><CheckEmailPage /></AppWrapper>} />
         <Route path="/verify-email/:token" element={<AppWrapper><VerifyEmailPage /></AppWrapper>} />
         <Route path="/forgot-password" element={<AppWrapper><ForgotPasswordPage /></AppWrapper>} />

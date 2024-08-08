@@ -8,6 +8,7 @@ const authRoutes = require('./routes/authRoutes');
 const stripeRoutes = require('./routes/stripe');
 const stripeWebhookRoutes = require('./routes/stripeWebhook');
 const userRoutes = require('./routes/userRoutes');
+const axios = require('axios');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -47,6 +48,28 @@ app.use(passport.session());
 app.use('/api/auth', authRoutes);
 app.use('/api/stripe', stripeRoutes);
 app.use('/api', userRoutes);
+
+app.post('/api/exo', async (req, res) => {
+  const userMessage = req.body.message;
+  try {
+    const response = await axios({
+      method: 'post',
+      url: 'http://localhost:5000/chat',
+      data: { message: userMessage },
+      responseType: 'stream'
+    });
+
+    response.data.on('data', (chunk) => {
+      res.write(chunk.toString());
+    });
+    response.data.on('end', () => {
+      res.end();
+    });
+  } catch (error) {
+    console.error('Error communicating with Exo:', error);
+    res.status(500).json({ error: 'Exo service is unavailable' });
+  }
+});
 
 app.use((err, req, res, next) => {
   console.error('Error:', err);
