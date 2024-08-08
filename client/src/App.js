@@ -15,6 +15,12 @@ import DashboardPage from './pages/DashboardPage';
 import SuccessPage from './pages/SuccessPage';
 import CanceledPage from './pages/CanceledPage';
 import ExoPage from './pages/ExoPage';
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
+import CheckEmailPage from './pages/CheckEmailPage';
+import VerifyEmailPage from './pages/VerifyEmailPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage.js'; 
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,9 +36,6 @@ const App = () => {
       setUser(userData);
       setHasPaid(userData.hasPaid || false);
       setIsEmailConfirmed(userData.isEmailConfirmed || false);
-      console.log('Stored user data:', userData);
-    } else {
-      console.log('No stored user data found.');
     }
   }, []);
 
@@ -42,19 +45,16 @@ const App = () => {
     setHasPaid(userData.hasPaid || false);
     setIsEmailConfirmed(userData.isEmailConfirmed || false);
     localStorage.setItem('user', JSON.stringify(userData));
-    console.log('User logged in:', userData);
-  }; 
+=  };
 
   const handleLogout = async (navigate, currentPath) => {
     try {
-      console.log('Logging out...');
       const response = await fetch('https://api.greenstickusa.com/api/auth/logout', {
         method: 'POST',
         credentials: 'include',
       });
 
       if (response.ok) {
-        console.log('Logout successful');
         setIsAuthenticated(false);
         setUser(null);
         setHasPaid(false);
@@ -85,13 +85,11 @@ const App = () => {
   const handlePayment = () => {
     setHasPaid(true);
     localStorage.setItem('hasPaid', 'true');
-    console.log('Payment completed');
   };
 
   const handleEmailConfirmation = () => {
     setIsEmailConfirmed(true);
     localStorage.setItem('isEmailConfirmed', 'true');
-    console.log('Email confirmed');
   };
 
   const fetchUpdatedUser = async (userId) => {
@@ -101,8 +99,7 @@ const App = () => {
         throw new Error('Failed to fetch user');
       }
       const updatedUser = await response.json();
-      setUser(updatedUser); // Update user state
-      console.log('User updated:', updatedUser);
+      setUser(updatedUser);
     } catch (error) {
       console.error('Error fetching updated user:', error);
     }
@@ -142,8 +139,14 @@ const App = () => {
         <Route path="/success" element={<AppWrapper><SuccessPage /></AppWrapper>} />
         <Route path="/canceled" element={<AppWrapper><CanceledPage /></AppWrapper>} />
         <Route path="/exo" element={<AppWrapper><ExoPage /></AppWrapper>} />
+        <Route path="/check-email" element={<AppWrapper><CheckEmailPage /></AppWrapper>} />
+        <Route path="/verify-email/:token" element={<AppWrapper><VerifyEmailPage /></AppWrapper>} />
+        <Route path="/forgot-password" element={<AppWrapper><ForgotPasswordPage /></AppWrapper>} />
+        <Route path="/reset-password/:token" element={<AppWrapper><ResetPasswordPage /></AppWrapper>} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
+      <Analytics />
+      <SpeedInsights />
     </Router>
   );
 };

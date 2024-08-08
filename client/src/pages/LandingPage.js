@@ -441,28 +441,28 @@ const LandingPage = () => {
               />
             </div>
             <div className="mt-12 grid grid-cols-2 gap-8 md:grid-cols-3">
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 rounded-lg p-6 flex flex-col items-center text-center">
                 <h3 className="text-lg font-[Poppins] font-medium text-gray-900">Instant Trade Analysis</h3>
                 <p className="mt-2 text-base text-gs-dark-gray">Exo instantly analyzes your trades, providing actionable insights and suggestions to optimize your strategies.</p>
               </div>
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 rounded-lg p-6 flex flex-col items-center text-center">
                 <h3 className="text-lg font-[Poppins] font-medium text-gray-900">Screenshot & File Analysis</h3>
                 <p className="mt-2 text-base text-gs-dark-gray">Upload screenshots or files and let Exo break down complex data, giving you a clear path to improvement.</p>
               </div>
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 rounded-lg p-6 flex flex-col items-center text-center">
                 <h3 className="text-lg font-[Poppins] font-medium text-gray-900">Seamless Integration</h3>
                 <p className="mt-2 text-base text-gs-dark-gray">Exo is fully integrated with Greenstick, tracking your progress and providing context-aware support tailored to your learning journey.</p>
               </div>
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 rounded-lg p-6 flex flex-col items-center text-center">
                 <h3 className="text-lg font-[Poppins] font-medium text-gray-900">Advanced Statistics</h3>
                 <p className="mt-2 text-base text-gs-dark-gray">Dive deep into your trading stats with Exo's advanced analytics, designed to help you understand and improve your performance.</p>
               </div>
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 rounded-lg p-6 flex flex-col items-center text-center">
                 <h3 className="text-lg font-[Poppins] font-medium text-gray-900">Next-Level Interactivity</h3>
                 <p className="mt-2 text-base text-gs-dark-gray">Questions? Comments? Concerns? Exo will always be right beside you, ready to explain anything you want to learn.
                 </p>
               </div>
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 rounded-lg p-6 flex flex-col items-center text-center">
                 <h3 className="text-lg font-[Poppins] font-medium text-gray-900">Context-Aware Feedback</h3>
                 <p className="mt-2 text-base text-gs-dark-gray">Exo provides personalized feedback based on your activity within Greenstick, ensuring you always receive relevant and actionable advice.</p>
               </div>

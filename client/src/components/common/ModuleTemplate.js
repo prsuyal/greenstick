@@ -13,7 +13,6 @@ const ModuleTemplate = ({ children, inlineButtonConfigurations, navigationButton
     } else if (action.type === 'function') {
         action.func();
     } else {
-        console.log("Action type not supported");
     }
   };
 
