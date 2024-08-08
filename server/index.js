@@ -9,7 +9,7 @@ const stripeRoutes = require('./routes/stripe');
 const stripeWebhookRoutes = require('./routes/stripeWebhook');
 const userRoutes = require('./routes/userRoutes');
 const axios = require('axios');
-
+const progressRoutes = require('./routes/progressRoutes');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -48,6 +48,7 @@ app.use(passport.session());
 app.use('/api/auth', authRoutes);
 app.use('/api/stripe', stripeRoutes);
 app.use('/api', userRoutes);
+app.use('/api/progress', progressRoutes);
 
 app.post('/api/exo', async (req, res) => {
   const userMessage = req.body.message;

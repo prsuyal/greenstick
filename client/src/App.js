@@ -21,6 +21,18 @@ import CheckEmailPage from './pages/CheckEmailPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage.js'; 
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import Lesson1a1 from './pages/Level 1/1A/Lesson 1/Module1.js';
+import Quiz1a1 from './pages/Level 1/1A/Lesson 1/Quiz1.js';
+import Lesson1a2 from './pages/Level 1/1A/Lesson 2/Module2.js';
+import Quiz1a2 from './pages/Level 1/1A/Lesson 2/Quiz2.js';
+import Lesson1b1 from './pages/Level 1/1B/Lesson 1/Module1.js';
+import Quiz1b1 from './pages/Level 1/1B/Lesson 1/Quiz1.js';
+import Lesson1b2 from './pages/Level 1/1B/Lesson 2/Module2.js';
+import Quiz1b2 from './pages/Level 1/1B/Lesson 2/Quiz2.js';
+import Lesson1c1 from './pages/Level 1/1C/Lesson 1/Module1.js';
+import Quiz1c1 from './pages/Level 1/1C/Lesson 1/Quiz1.js';
+import Lesson1c2 from './pages/Level 1/1C/Lesson 2/Module2.js';
+import Quiz1c2 from './pages/Level 1/1C/Lesson 2/Quiz2.js';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -45,7 +57,7 @@ const App = () => {
     setHasPaid(userData.hasPaid || false);
     setIsEmailConfirmed(userData.isEmailConfirmed || false);
     localStorage.setItem('user', JSON.stringify(userData));
-=  };
+  };
 
   const handleLogout = async (navigate, currentPath) => {
     try {
@@ -143,6 +155,18 @@ const App = () => {
         <Route path="/verify-email/:token" element={<AppWrapper><VerifyEmailPage /></AppWrapper>} />
         <Route path="/forgot-password" element={<AppWrapper><ForgotPasswordPage /></AppWrapper>} />
         <Route path="/reset-password/:token" element={<AppWrapper><ResetPasswordPage /></AppWrapper>} />
+        <Route path="/level-1/a/lesson-1" element={<AppWrapper><Lesson1a1/></AppWrapper>} />
+        <Route path="/level-1/a/quiz-1" element={<AppWrapper><Quiz1a1/></AppWrapper>} />
+        <Route path="/level-1/a/lesson-2" element={<AppWrapper><Lesson1a2/></AppWrapper>} />
+        <Route path="/level-1/a/quiz-2" element={<AppWrapper><Quiz1a2/></AppWrapper>} />
+        <Route path="/level-1/b/lesson-1" element={<AppWrapper><Lesson1b1/></AppWrapper>} />
+        <Route path="/level-1/b/quiz-1" element={<AppWrapper><Quiz1b1/></AppWrapper>} />
+        <Route path="/level-1/b/lesson-2" element={<AppWrapper><Lesson1b2/></AppWrapper>} />
+        <Route path="/level-1/b/quiz-2" element={<AppWrapper><Quiz1b2/></AppWrapper>} />
+        <Route path="/level-1/c/lesson-1" element={<AppWrapper><Lesson1c1/></AppWrapper>} />
+        <Route path="/level-1/c/quiz-1" element={<AppWrapper><Quiz1c1/></AppWrapper>} />
+        <Route path="/level-1/c/lesson-2" element={<AppWrapper><Lesson1c2/></AppWrapper>} />
+        <Route path="/level-1/c/quiz-2" element={<AppWrapper><Quiz1c2/></AppWrapper>} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
       <Analytics />
