@@ -67,7 +67,7 @@ const ExoPage = ({ user }) => {
   
     try {
       const messageToSend = isEditing ? editMessage : message;
-      const res = await fetch("http://localhost:3001/api/exo", {
+      const res = await fetch("https://api.greenstickusa.com/api/exo", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

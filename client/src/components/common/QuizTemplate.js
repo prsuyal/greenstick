@@ -30,8 +30,8 @@ const QuizTemplate = ({ title, questions, quizId, userId, nextPath, previousPath
       setIsLoading(true);
       try {
         const [userResponse, progressResponse] = await Promise.all([
-          axios.get(`http://localhost:3001/api/users/${userId}`),
-          axios.get(`http://localhost:3001/api/progress/quiz-progress/${userId}/${quizId}`)
+          axios.get(`https://api.greenstickusa.com/api/users/${userId}`),
+          axios.get(`https://api.greenstickusa.com/api/progress/quiz-progress/${userId}/${quizId}`)
         ]);
 
         setUser(userResponse.data);
@@ -94,7 +94,7 @@ const QuizTemplate = ({ title, questions, quizId, userId, nextPath, previousPath
 
   const saveProgress = async (updatedAnswers, progress) => {
     try {
-      await axios.post('http://localhost:3001/api/progress/update-quiz-progress', {
+      await axios.post('https://api.greenstickusa.com/api/progress/update-quiz-progress', {
         userId,
         quizId,
         answers: updatedAnswers,
@@ -112,7 +112,7 @@ const QuizTemplate = ({ title, questions, quizId, userId, nextPath, previousPath
   const handleComplete = async (finalAnswers) => {
     const xp = finalAnswers.filter(answer => answer && answer.isCorrect).length * 10;
     try {
-      await axios.post('http://localhost:3001/api/progress/update-xp', {
+      await axios.post('https://api.greenstickusa.com/api/progress/update-xp', {
         userId,
         xp: xp
       });

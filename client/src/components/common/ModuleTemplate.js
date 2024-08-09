@@ -33,8 +33,8 @@ const ModuleTemplate = ({
       try {
         const lessonId = `${levelNumber}-${sublevelLetter}-${lessonNumber}`;
         const [userResponse, progressResponse] = await Promise.all([
-          axios.get(`http://localhost:3001/api/users/${userId}`),
-          axios.get(`http://localhost:3001/api/progress/${userId}/${lessonId}`)
+          axios.get(`https://api.greenstickusa.com/api/users/${userId}`),
+          axios.get(`https://api.greenstickusa.com/api/progress/${userId}/${lessonId}`)
         ]);
         setUser(userResponse.data);
         const savedProgress = progressResponse.data.progress;
@@ -82,7 +82,7 @@ const ModuleTemplate = ({
     const progressPercentage = Math.round((step / totalSteps) * 100);
     console.log('Saving progress:', { userId, lessonId: `${levelNumber}-${sublevelLetter}-${lessonNumber}`, progress: progressPercentage, title, levelNumber, sublevelLetter, lessonNumber});
     try {
-      await axios.post('http://localhost:3001/api/progress/update-progress', {
+      await axios.post('https://api.greenstickusa.com/api/progress/update-progress', {
         userId,
         lessonId: `${levelNumber}-${sublevelLetter}-${lessonNumber}`,
         progress: progressPercentage,
