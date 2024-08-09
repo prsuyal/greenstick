@@ -3,7 +3,6 @@ from flask_cors import CORS
 from openai import OpenAI
 import os
 import logging
-import boto3
 from functools import wraps
 
 # Initialize Flask app
@@ -13,27 +12,17 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {
     "origins": ["http://localhost:3000", "https://greenstickusa.com", "https://www.greenstickusa.com"],
     "methods": ["GET", "POST", "OPTIONS"],
-    "allow_headers": ["Content-Type", "Authorization", "x-api-key"]
+    "allow_headers": ["Content-Type", "Authorization", "x-api-key"],
+    "supports_credentials": True
 }})
-
-# Initialize SSM client
-ssm = boto3.client('ssm')
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def get_ssm_parameter(param_name):
-    try:
-        response = ssm.get_parameter(Name=param_name, WithDecryption=True)
-        return response['Parameter']['Value']
-    except Exception as e:
-        logger.error(f"Error retrieving SSM parameter {param_name}: {str(e)}")
-        raise
-
-# Get API keys
-EXO_API_KEY = get_ssm_parameter('/exo-flask/exo-api-key')
-OPENAI_API_KEY = get_ssm_parameter('/exo-flask/openai-api-key')
+# Get API keys from environment variables
+EXO_API_KEY = os.getenv('EXO_API_KEY')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 # Initialize OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)

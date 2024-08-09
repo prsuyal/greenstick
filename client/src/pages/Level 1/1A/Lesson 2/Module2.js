@@ -7,20 +7,21 @@ import { motion } from 'framer-motion';
 const SubLevelALesson2 = ({ user }) => {
   const [step, setStep] = useState(0);
 
-  const handleNext = (newStep) => {
+  const handleNext = () => {
     if (step < content.length - 1) {
-      setStep(newStep);
+      setStep(step + 1);
     }
   };
 
-  const handlePrevious = (newStep) => {
+  const handlePrevious = () => {
     if (step > 0) {
-      setStep(newStep);
+      setStep(step - 1);
     }
   };
+
   if (!user) {
-    return <div></div>; // Render a loading state while fetching user data
-  };
+    return <div>Loading...</div>; // Render a loading state while fetching user data
+  }
 
   const handleStepChange = (newStep) => {
     setStep(newStep);
@@ -104,7 +105,10 @@ const SubLevelALesson2 = ({ user }) => {
     <ModuleTemplate 
       title="Let's understand the market" 
       lessonId="1a2"
-    userId={user.id}
+      levelNumber="1"
+      sublevelLetter="A"
+      lessonNumber="2"
+      userId={user.id}
       onNext={handleNext}
       onPrevious={handlePrevious}
       totalSteps={content.length}
@@ -123,7 +127,6 @@ const SubLevelALesson2 = ({ user }) => {
           {item}
         </motion.div>
       ))}
-      
     </ModuleTemplate>
   );
 };

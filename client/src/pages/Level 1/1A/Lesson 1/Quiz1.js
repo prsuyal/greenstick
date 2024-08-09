@@ -50,7 +50,7 @@ const questions = [
 
 const Quiz1 = ({ user }) => {
   if (!user) {
-    return <div></div>; // Render a loading state while fetching user data
+    return <div>Loading...</div>; // Render a loading state while fetching user data
   }
   const handleComplete = () => {
     console.log("Quiz completed!");
@@ -61,8 +61,11 @@ const Quiz1 = ({ user }) => {
     <QuizTemplate
       title="Quiz 1"
       quizId="1a1-quiz"
-    userId={user.id}
-      questions={questions} 
+      levelNumber="1"
+      sublevelLetter="A"
+      lessonNumber="1"
+      userId={user.id}
+      questions={questions}
       onComplete={handleComplete}
       nextPath="/level-1/a/lesson-2"
       previousPath="/level-1/a/lesson-1"

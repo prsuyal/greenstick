@@ -238,6 +238,9 @@ const SubLevelBLesson1 = ({ user }) => {
     <ModuleTemplate 
       title="Breaking down stock prices" 
       lessonId="1b1"
+      level_number="1"
+      sublevel_letter="B"
+      lesson_number="1"
     userId={user.id}
       onNext={handleNext}
       onPrevious={handlePrevious}

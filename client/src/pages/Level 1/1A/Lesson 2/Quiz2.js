@@ -61,6 +61,9 @@ const Quiz2 = ({ user }) => {
     <QuizTemplate 
       title="Quiz 2"
       quizId="1a2-quiz"
+      level_number="1"
+      sublevel_letter="A"
+      lesson_number="2"
     userId={user.id}
       questions={questions}
       onComplete={handleComplete}

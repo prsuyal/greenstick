@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { IoMdClose, IoMdArrowBack, IoMdArrowForward, IoMdRefresh } from 'react-icons/io';
 import axios from 'axios';
-import person from "../../assets/images/person.svg";
+import ExoLogo from "../../assets/images/thinexologo.svg";
 import { motion } from 'framer-motion';
 
-const QuizTemplate = ({ title, questions, quizId, userId, nextPath, previousPath }) => {
+const QuizTemplate = ({ title, questions, quizId, userId, nextPath, previousPath, levelNumber, sublevelLetter, lessonNumber }) => {
   const navigate = useNavigate();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -15,35 +15,37 @@ const QuizTemplate = ({ title, questions, quizId, userId, nextPath, previousPath
   const [isCompleted, setIsCompleted] = useState(false);
   const totalQuestions = questions.length;
 
+  const decodeAnswers = (encodedAnswers, questions) => {
+    return encodedAnswers.split(',').map((answer, index) => {
+      const selectedOptionIndex = parseInt(answer, 10) - 1;
+      return selectedOptionIndex >= 0 ? {
+        selectedOption: questions[index].options[selectedOptionIndex],
+        isCorrect: questions[index].options[selectedOptionIndex].isCorrect
+      } : null;
+    });
+  };
+
   useEffect(() => {
     const fetchUserAndProgress = async () => {
       setIsLoading(true);
       try {
         const [userResponse, progressResponse] = await Promise.all([
           axios.get(`http://localhost:3001/api/users/${userId}`),
-          axios.get(`http://localhost:3001/api/progress/quiz-progress/${userId}/${quizId}/${totalQuestions}`)
+          axios.get(`http://localhost:3001/api/progress/quiz-progress/${userId}/${quizId}`)
         ]);
-        
+
         setUser(userResponse.data);
-        
+
         const quizProgress = progressResponse.data.progress;
-        const newAnswers = quizProgress.map((progress, index) => {
-          if (progress !== undefined) {
-            const question = questions[index];
-            const selectedOption = question.options[progress];
-            return {
-              selectedOption: selectedOption,
-              isCorrect: selectedOption.isCorrect
-            };
-          }
-          return null;
-        });
-        setAnswers(newAnswers);
-        
-        const firstUnansweredIndex = newAnswers.findIndex(answer => answer === null);
-        setCurrentQuestionIndex(firstUnansweredIndex === -1 ? totalQuestions - 1 : firstUnansweredIndex);
-        
-        setIsCompleted(newAnswers.every(answer => answer !== null));
+        if (quizProgress) {
+          const decodedAnswers = decodeAnswers(quizProgress.answers, questions);
+          setAnswers(decodedAnswers);
+
+          const firstUnansweredIndex = decodedAnswers.findIndex(answer => answer === null);
+          setCurrentQuestionIndex(firstUnansweredIndex === -1 ? totalQuestions - 1 : firstUnansweredIndex);
+
+          setIsCompleted(decodedAnswers.every(answer => answer !== null));
+        }
       } catch (error) {
         console.error('Error fetching user data or progress:', error);
       } finally {
@@ -67,7 +69,8 @@ const QuizTemplate = ({ title, questions, quizId, userId, nextPath, previousPath
     setAnswers(newAnswers);
     setSelectedOption(null);
 
-    await saveProgress(newAnswers);
+    const progress = Math.round((newAnswers.filter(a => a !== null).length / totalQuestions) * 100);
+    await saveProgress(newAnswers, progress);
 
     if (newAnswers.every(answer => answer !== null)) {
       setIsCompleted(true);
@@ -89,16 +92,17 @@ const QuizTemplate = ({ title, questions, quizId, userId, nextPath, previousPath
     }
   };
 
-  const saveProgress = async (updatedAnswers) => {
+  const saveProgress = async (updatedAnswers, progress) => {
     try {
-      const encodedAnswers = updatedAnswers.map(answer => 
-        answer ? questions[currentQuestionIndex].options.findIndex(option => option === answer.selectedOption) + 1 : 0
-      );
       await axios.post('http://localhost:3001/api/progress/update-quiz-progress', {
         userId,
         quizId,
-        answers: encodedAnswers,
-        totalQuestions
+        answers: updatedAnswers,
+        progress,
+        title,
+        levelNumber,
+        sublevelLetter,
+        lessonNumber
       });
     } catch (error) {
       console.error('Error saving quiz progress:', error);
@@ -123,29 +127,11 @@ const QuizTemplate = ({ title, questions, quizId, userId, nextPath, previousPath
     setCurrentQuestionIndex(0);
     setSelectedOption(null);
     setIsCompleted(false);
-    await saveProgress(resetAnswers);
+    await saveProgress(resetAnswers, 0);
   };
 
   const currentQuestion = questions[currentQuestionIndex];
   const currentAnswer = answers[currentQuestionIndex];
-
-  if (!user || isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (user.plan === 'Standard') {
-    return (
-      <div className="bg-white p-6 rounded-lg max-w-6xl mx-auto relative min-h-screen font-[Poppins]">
-        <h1 className="text-4xl font-bold mb-6">{title}</h1>
-        <div className="text-center">
-          <p className="text-xl mb-4">This quiz is only available for Pro and Ultimate users.</p>
-          <Link to="/pricing" className="bg-gs-dark-green text-white font-bold py-2 px-6 rounded-full hover:bg-gs-light-green transition-colors duration-300">
-            Upgrade your plan
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-white p-6 rounded-lg max-w-6xl mx-auto relative min-h-screen font-[Poppins]">
@@ -175,15 +161,9 @@ const QuizTemplate = ({ title, questions, quizId, userId, nextPath, previousPath
             />
           ))}
         </div>
-        <button 
-          className="text-lg p-2 hover:bg-gray-200 rounded-full"
-          onClick={() => console.log("Profile options")}
-          aria-label="Profile options"
-        >
-          <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-            <img src={person} alt="Profile" className="w-6 h-6" />
-          </div>
-        </button>
+        <Link to="/exo" className="w-8 h-8">
+          <img src={ExoLogo} alt="Exo" className="w-full h-full" />
+        </Link>
       </div>
       
       <h1 className="text-4xl font-bold mb-6">{title}</h1>

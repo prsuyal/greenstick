@@ -93,6 +93,9 @@ const SubLevelCLesson1Quiz = ({ user }) => {
       title="Charts+ Quiz"
       questions={questions}
       quizId="1c1-quiz"
+      level_number="1"
+      sublevel_letter="C"
+      lesson_number="1"
     userId={user.id}
       onComplete={handleComplete}
       nextPath="/level-1/c/lesson-2"

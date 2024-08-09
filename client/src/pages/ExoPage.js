@@ -34,7 +34,7 @@ const ExoPage = ({ user }) => {
 
   const handleSendMessage = async () => {
     if (!message.trim() && !editMessage.trim()) return;
-
+  
     if (isEditing && editIndex !== null) {
       const updatedResponses = responses.map((res, index) =>
         index === editIndex
@@ -61,10 +61,10 @@ const ExoPage = ({ user }) => {
         },
       ]);
     }
-
+  
     setMessage("");
     resetTextareaHeight();
-
+  
     try {
       const messageToSend = isEditing ? editMessage : message;
       const res = await fetch("http://localhost:3001/api/exo", {
@@ -74,15 +74,19 @@ const ExoPage = ({ user }) => {
         },
         body: JSON.stringify({ message: messageToSend }),
       });
-
+  
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+  
       if (!res.body) {
         throw new Error("ReadableStream not yet supported in this browser.");
       }
-
+  
       const reader = res.body.getReader();
       const decoder = new TextDecoder("utf-8");
       let partialResponse = "";
-
+  
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
@@ -103,13 +107,14 @@ const ExoPage = ({ user }) => {
           index === prevResponses.length - 1
             ? {
                 ...resp,
-                response: "An error occurred while communicating with Exo.",
+                response: "An error occurred while communicating with Exo. Please try again later.",
               }
             : resp
         )
       );
     }
   };
+  
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {

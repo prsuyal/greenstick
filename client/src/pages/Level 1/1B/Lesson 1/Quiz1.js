@@ -92,6 +92,9 @@ const SublevelBLesson1Quiz1 = ({ user }) => {
     <QuizTemplate
       title="Quiz 1"
       quizId="1b1-quiz"
+      level_number="1"
+      sublevel_letter="B"
+      lesson_number="1"
     userId={user.id}
       questions={questions}
       onComplete={handleComplete}

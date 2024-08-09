@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
 import axios from 'axios';
-import person from "../../assets/images/person.svg";
+import ExoLogo from '../../assets/images/thinexologo.svg';
 
 const ModuleTemplate = ({
   children, 
@@ -16,10 +16,14 @@ const ModuleTemplate = ({
   onPrevious,
   isContinueDisabled,
   onStepChange,
-  currentStep: parentCurrentStep
+  currentStep: parentCurrentStep,
+  levelNumber,
+  sublevelLetter,
+  lessonNumber
 }) => {
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(parentCurrentStep - 1);
+  const location = useLocation();
+  const [currentStep, setCurrentStep] = useState(0);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -27,6 +31,7 @@ const ModuleTemplate = ({
     console.log("Fetching user and progress data...");
     const fetchUserAndProgress = async () => {
       try {
+        const lessonId = `${levelNumber}-${sublevelLetter}-${lessonNumber}`;
         const [userResponse, progressResponse] = await Promise.all([
           axios.get(`http://localhost:3001/api/users/${userId}`),
           axios.get(`http://localhost:3001/api/progress/${userId}/${lessonId}`)
@@ -45,7 +50,7 @@ const ModuleTemplate = ({
     };
 
     fetchUserAndProgress();
-  }, [userId, lessonId]);
+  }, [userId, levelNumber, sublevelLetter, lessonNumber]);
 
   const handleNext = async () => {
     console.log("Current step before increment:", currentStep);
@@ -75,12 +80,16 @@ const ModuleTemplate = ({
 
   const saveProgress = async (step) => {
     const progressPercentage = Math.round((step / totalSteps) * 100);
-    console.log('Saving progress:', progressPercentage);
+    console.log('Saving progress:', { userId, lessonId: `${levelNumber}-${sublevelLetter}-${lessonNumber}`, progress: progressPercentage, title, levelNumber, sublevelLetter, lessonNumber});
     try {
       await axios.post('http://localhost:3001/api/progress/update-progress', {
         userId,
-        lessonId,
-        progress: progressPercentage
+        lessonId: `${levelNumber}-${sublevelLetter}-${lessonNumber}`,
+        progress: progressPercentage,
+        title,
+        levelNumber,
+        sublevelLetter,
+        lessonNumber,
       });
     } catch (error) {
       console.error('Error saving progress:', error);
@@ -94,7 +103,7 @@ const ModuleTemplate = ({
   const childrenArray = React.Children.toArray(children);
 
   return (
-    <div className="bg-white p-6 rounded-lg max-w-4xl mx-auto relative min-h-screen font-[Poppins]">
+    <div className="bg-white p-6 rounded-lg max-w-6xl mx-auto relative min-h-screen font-[Poppins]">
       <div className="flex justify-between items-center mb-4">
         <button 
           className="text-lg p-2 hover:bg-gray-200 rounded-md border border-gray-300"
@@ -105,22 +114,16 @@ const ModuleTemplate = ({
         </button>
         <div className="flex items-center">
           <span className="text-sm font-medium text-gs-dark-gray mr-2">{`${Math.round((currentStep / totalSteps) * 100)}%`}</span>
-          <div className="w-32 bg-gs-light-gray rounded-full h-2">
+          <div className="w-96 bg-gs-light-gray rounded-full h-2">
             <div 
               className="bg-gs-dark-green h-2 rounded-full" 
               style={{ width: `${(currentStep / totalSteps) * 100}%` }}
             ></div>
           </div>
         </div>
-        <button 
-          className="text-lg p-2 hover:bg-gray-200 rounded-full"
-          onClick={() => console.log("Profile options")}
-          aria-label="Profile options"
-        >
-          <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-            <img src={person} alt="Profile" className="w-6 h-6" />
-          </div>
-        </button>
+        <Link to="/exo" className="w-8 h-8">
+          <img src={ExoLogo} alt="Exo" className="w-full h-full" />
+        </Link>
       </div>
       <h1 className="text-4xl font-bold mb-6">{title}</h1>
       <div className="text-lg leading-relaxed space-y-6">

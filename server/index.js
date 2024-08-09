@@ -55,7 +55,10 @@ app.post('/api/exo', async (req, res) => {
   try {
     const response = await axios({
       method: 'post',
-      url: 'http://localhost:5000/chat',
+      url: 'https://greenstick-exo-e1c12e1f579a.herokuapp.com/chat', // Updated URL
+      headers: {
+        'x-api-key': process.env.EXO_API_KEY, // Ensure this environment variable is set
+      },
       data: { message: userMessage },
       responseType: 'stream'
     });
@@ -71,6 +74,7 @@ app.post('/api/exo', async (req, res) => {
     res.status(500).json({ error: 'Exo service is unavailable' });
   }
 });
+
 
 app.use((err, req, res, next) => {
   console.error('Error:', err);

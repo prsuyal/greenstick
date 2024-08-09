@@ -134,6 +134,9 @@ const SubLevelBLesson2Quiz = ({ user }) => {
     <QuizTemplate
       title="How to Make Money 101 - Quiz"
       quizId="1b2-quiz"
+      level_number="1"
+      sublevel_letter="B"
+      lesson_number="2"
     userId={user.id}
       questions={questions}
       onComplete={handleComplete}

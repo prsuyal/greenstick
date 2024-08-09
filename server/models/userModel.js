@@ -145,15 +145,31 @@ const updateUserPassword = async (email, password) => {
   }
 };
 
-const updateUserProgress = async (userId, lessonId, progress) => {
+const updateUserProgress = async (userId, lessonId, progress, title, levelNumber, sublevelLetter, lessonNumber) => {
   try {
+    console.log('Updating progress with:', { userId, lessonId, progress, title, levelNumber, sublevelLetter, lessonNumber });
+    
+    const sanitizedLessonId = lessonId || 'default';
+    const sanitizedTitle = title || 'Untitled Lesson';
+    const sanitizedLevelNumber = levelNumber || 0;
+    const sanitizedSublevelLetter = sublevelLetter || 'A';
+    const sanitizedLessonNumber = lessonNumber || 0;
+
     const { rows } = await pool.query(
-      'INSERT INTO user_progress (user_id, lesson_id, progress) VALUES ($1, $2, $3) ON CONFLICT (user_id, lesson_id) DO UPDATE SET progress = $3, last_updated = CURRENT_TIMESTAMP RETURNING progress',
-      [userId, lessonId, progress]
+      `INSERT INTO user_progress 
+       (user_id, lesson_id, progress, title, level_number, sublevel_letter, lesson_number, last_updated) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, CURRENT_TIMESTAMP) 
+       ON CONFLICT (user_id, lesson_id) 
+       DO UPDATE SET progress = $3, title = $4, level_number = $5, sublevel_letter = $6, lesson_number = $7, last_updated = CURRENT_TIMESTAMP 
+       RETURNING *`,
+      [userId, sanitizedLessonId, progress, sanitizedTitle, sanitizedLevelNumber, sanitizedSublevelLetter, sanitizedLessonNumber]
     );
-    return rows[0].progress;
+    console.log('Query result:', rows[0]);
+    return rows[0];
   } catch (error) {
-    throw new Error('Failed to update user progress');
+    console.error('Database error:', error.message);
+    console.error('Error stack:', error.stack);
+    throw new Error(`Failed to update user progress: ${error.message}`);
   }
 };
 
@@ -186,68 +202,89 @@ const getUserProgress = async (userId, lessonId) => {
   }
 };
 
-const encodeQuizProgress = (answers, totalQuestions) => {
-  let progress = 0;
-  for (let i = 0; i < totalQuestions; i++) {
-    if (answers[i] !== undefined) {
-      // Add 1 to the answer index because 0 represents unanswered
-      progress += (answers[i]) * Math.pow(10, totalQuestions - i - 1);
-    }
-  }
-  return progress;
+const encodeAnswers = (answers) => {
+  return answers.map(answer => answer !== null ? answer.selectedOption + 1 : 0).join(',');
 };
 
-const decodeQuizProgress = (progress, totalQuestions) => {
-  const answers = new Array(totalQuestions).fill(undefined);
-  for (let i = 0; i < totalQuestions; i++) {
-    const digit = Math.floor(progress / Math.pow(10, totalQuestions - i - 1)) % 10;
-    if (digit !== 0) {
-      // Subtract 1 from the digit to get the original answer index
-      answers[i] = digit;
-    }
-  }
-  return answers;
+const decodeAnswers = (encodedAnswers, questions) => {
+  return encodedAnswers.split(',').map((answer, index) => {
+      const selectedOptionIndex = parseInt(answer, 10) - 1;
+      return selectedOptionIndex >= 0 ? {
+          selectedOption: questions[index].options[selectedOptionIndex],
+          isCorrect: questions[index].options[selectedOptionIndex].isCorrect
+      } : null;
+  });
 };
 
-const updateQuizProgress = async (userId, quizId, answers, totalQuestions) => {
-  const progress = encodeQuizProgress(answers, totalQuestions);
+const updateQuizProgress = async (userId, quizId, answers, progress, title, levelNumber, sublevelLetter, lessonNumber) => {
+  const encodedAnswers = encodeAnswers(answers);
   try {
     const { rows } = await pool.query(
-      'INSERT INTO user_progress (user_id, lesson_id, progress) VALUES ($1, $2, $3) ON CONFLICT (user_id, lesson_id) DO UPDATE SET progress = $3, last_updated = CURRENT_TIMESTAMP RETURNING progress',
-      [userId, quizId, progress]
+      `INSERT INTO user_quiz_progress 
+       (user_id, quiz_id, answers, progress, title, level_number, sublevel_letter, lesson_number, last_updated) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, CURRENT_TIMESTAMP) 
+       ON CONFLICT (user_id, quiz_id) 
+       DO UPDATE SET answers = $3, progress = $4, title = $5, level_number = $6, sublevel_letter = $7, lesson_number = $8, last_updated = CURRENT_TIMESTAMP 
+       RETURNING *`,
+      [userId, quizId, encodedAnswers, progress, title, levelNumber, sublevelLetter, lessonNumber]
     );
-    return rows[0].progress;
+    return rows[0];
   } catch (error) {
+    console.error('Error updating quiz progress:', error);
     throw new Error('Failed to update quiz progress');
   }
 };
 
-const getQuizProgress = async (userId, quizId, totalQuestions) => {
+const getQuizProgress = async (userId, quizId) => {
   try {
-    const { rows } = await pool.query(
-      'SELECT progress FROM user_progress WHERE user_id = $1 AND lesson_id = $2',
-      [userId, quizId]
-    );
+    const { rows } = await pool.query('SELECT * FROM user_quiz_progress WHERE user_id = $1 AND quiz_id = $2', [userId, quizId]);
     if (rows.length > 0) {
-      return decodeQuizProgress(rows[0].progress, totalQuestions);
+      return rows[0];
     }
-    return new Array(totalQuestions).fill(undefined);
+    return null;
   } catch (error) {
+    console.error('Error getting quiz progress:', error);
     throw new Error('Failed to get quiz progress');
   }
 };
 
 const getLatestProgress = async (userId) => {
   try {
+    console.log('Fetching latest progress for user:', userId);
     const result = await pool.query(
-      'SELECT * FROM user_progress WHERE user_id = $1 ORDER BY last_updated DESC LIMIT 1',
+      `SELECT * FROM user_progress 
+       WHERE user_id = $1 
+       ORDER BY last_updated DESC 
+       LIMIT 1`,
+      [userId]
+    );
+    console.log('Query result:', result.rows);
+    if (result.rows.length === 0) {
+      console.log('No progress found for user');
+      return null;
+    }
+    return result.rows[0];
+  } catch (error) {
+    console.error('Database error:', error);
+    throw new Error('Failed to get latest progress');
+  }
+};
+
+const getLatestQuizProgress = async (userId) => {
+  try {
+    const result = await pool.query(
+      `SELECT *, true as "isQuiz" FROM user_quiz_progress 
+       WHERE user_id = $1 
+       ORDER BY last_updated DESC 
+       LIMIT 1`,
       [userId]
     );
     return result.rows[0];
   } catch (error) {
-    throw new Error('Failed to get latest progress');
+    throw new Error('Failed to get latest quiz progress');
   }
 };
+
 
 module.exports = {
   createUser,
@@ -267,7 +304,8 @@ module.exports = {
   getUserProgress,
   updateQuizProgress,
   getQuizProgress,
-  encodeQuizProgress,
-  decodeQuizProgress,
-  getLatestProgress
+  encodeAnswers,
+  decodeAnswers,
+  getLatestProgress,
+  getLatestQuizProgress,
 };

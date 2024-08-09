@@ -274,7 +274,9 @@ const SubLevelALesson1 = ({ user }) => {
   return (
     <ModuleTemplate 
       title="Getting Started" 
-      lessonId="1a1"
+      levelNumber={1}
+      sublevelLetter="A"
+      lessonNumber={1}
       userId={user.id}
       onNext={handleNext}
       onPrevious={handlePrevious}
@@ -283,7 +285,7 @@ const SubLevelALesson1 = ({ user }) => {
       isContinueDisabled={isContinueDisabled}
       nextLessonPath="/level-1/a/quiz-1"
       previousLessonPath="/"
-      onStepChange={handleStepChange} // Add this prop
+      onStepChange={handleStepChange}
     >
       {content.map((item, index) => (
         <div key={index}>{item}</div>
