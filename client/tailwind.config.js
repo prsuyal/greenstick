@@ -17,9 +17,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    scrollbar: ['rounded']
   },
-  plugins: [require('flowbite/plugin')],
+  plugins: [require('flowbite/plugin'), require('tailwind-scrollbar')],
   content: ["./node_modules/flowbite/**/*.js"]
 
 };

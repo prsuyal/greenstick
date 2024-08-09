@@ -14,28 +14,55 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import DashboardPage from './pages/DashboardPage';
 import SuccessPage from './pages/SuccessPage';
 import CanceledPage from './pages/CanceledPage';
+import ExoPage from './pages/ExoPage';
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import CheckEmailPage from './pages/CheckEmailPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage.js'; 
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import Lesson1a1 from './pages/Level 1/1A/Lesson 1/Module1.js';
+import Quiz1a1 from './pages/Level 1/1A/Lesson 1/Quiz1.js';
+import Lesson1a2 from './pages/Level 1/1A/Lesson 2/Module2.js';
+import Quiz1a2 from './pages/Level 1/1A/Lesson 2/Quiz2.js';
+import Lesson1b1 from './pages/Level 1/1B/Lesson 1/Module1.js';
+import Quiz1b1 from './pages/Level 1/1B/Lesson 1/Quiz1.js';
+import Lesson1b2 from './pages/Level 1/1B/Lesson 2/Module2.js';
+import Quiz1b2 from './pages/Level 1/1B/Lesson 2/Quiz2.js';
+import Lesson1c1 from './pages/Level 1/1C/Lesson 1/Module1.js';
+import Quiz1c1 from './pages/Level 1/1C/Lesson 1/Quiz1.js';
+import Lesson1c2 from './pages/Level 1/1C/Lesson 2/Module2.js';
+import Quiz1c2 from './pages/Level 1/1C/Lesson 2/Quiz2.js';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isSPU, setIsSPU] = useState(false);  
+  const [isPU, setIsPU] = useState(false);
+  const [isU, setIsU] = useState(false);
   const [user, setUser] = useState(null);
   const [hasPaid, setHasPaid] = useState(false);
   const [isEmailConfirmed, setIsEmailConfirmed] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const userData = JSON.parse(storedUser);
       setIsAuthenticated(true);
+      if (userData.plan == "Standard" || userData.plan == "Pro" || userData.plan == "Ultimate") {
+        setIsSPU(true);
+      }
+      if (userData.plan == "Pro" || userData.plan == "Ultimate") {
+        setIsPU(true);
+      }
+      if (userData.plan == "Ultimate") {
+        setIsU(true);
+      }
       setUser(userData);
       setHasPaid(userData.hasPaid || false);
       setIsEmailConfirmed(userData.isEmailConfirmed || false);
     }
+    setIsLoading(false);
   }, []);
 
   const handleLogin = (userData) => {
@@ -98,7 +125,10 @@ const App = () => {
         throw new Error('Failed to fetch user');
       }
       const updatedUser = await response.json();
+      console.log('Fetched user data:', updatedUser);
+      console.log('bob:', updatedUser);
       setUser(updatedUser);
+      localStorage.setItem('user', JSON.stringify(updatedUser));
     } catch (error) {
       console.error('Error fetching updated user:', error);
     }
@@ -120,12 +150,14 @@ const App = () => {
       onPayment: handlePayment, 
       fetchUpdatedUser
     });
-  };
+  }; 
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<AppWrapper><LandingPage /></AppWrapper>} />
+        <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <AppWrapper><LandingPage /></AppWrapper>} />
+        <Route path="/success" element={isAuthenticated ? <AppWrapper><SuccessPage /></AppWrapper> : <Navigate to="/dashboard" />} />
+        <Route path="/canceled" element={isAuthenticated ? <AppWrapper><CanceledPage /></AppWrapper> : <Navigate to="/dashboard" />} />
         <Route path="/about" element={<AppWrapper><AboutPage /></AppWrapper>} />
         <Route path="/contact" element={<AppWrapper><ContactPage /></AppWrapper>} />
         <Route path="/help" element={<AppWrapper><HelpPage /></AppWrapper>} />
@@ -134,13 +166,25 @@ const App = () => {
         <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <AppWrapper><RegisterPage /></AppWrapper>} />
         <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <AppWrapper><LoginPage /></AppWrapper>} />
         <Route path="/pricing" element={<AppWrapper><PricingPage /></AppWrapper>} />
-        <Route path="/dashboard" element={isAuthenticated ? <AppWrapper><DashboardPage /></AppWrapper> : <Navigate to="/login" />} />
-        <Route path="/success" element={<AppWrapper><SuccessPage /></AppWrapper>} />
-        <Route path="/canceled" element={<AppWrapper><CanceledPage /></AppWrapper>} />
+        <Route path="/dashboard" element={<AppWrapper><DashboardPage /></AppWrapper>} />
+        <Route path="/exo" element={(!isAuthenticated || !isSPU) ? <Navigate to="/dashboard" /> : <AppWrapper><ExoPage /></AppWrapper>} />
         <Route path="/check-email" element={<AppWrapper><CheckEmailPage /></AppWrapper>} />
         <Route path="/verify-email/:token" element={<AppWrapper><VerifyEmailPage /></AppWrapper>} />
         <Route path="/forgot-password" element={<AppWrapper><ForgotPasswordPage /></AppWrapper>} />
         <Route path="/reset-password/:token" element={<AppWrapper><ResetPasswordPage /></AppWrapper>} />
+        <Route path="/dashboard" element={isAuthenticated ? <Navigate to="/dashboard" /> : <AppWrapper><LandingPage /></AppWrapper>} />
+        <Route path="/level-1/a/lesson-1" element={(!isAuthenticated || !isSPU) ? <Navigate to="/dashboard" /> : <AppWrapper><Lesson1a1 /></AppWrapper>} />
+        <Route path="/level-1/a/lesson-2" element={(!isAuthenticated || !isSPU) ? <Navigate to="/dashboard" /> : <AppWrapper><Lesson1a2 /></AppWrapper>} />
+        <Route path="/level-1/b/lesson-1" element={(!isAuthenticated || !isSPU) ? <Navigate to="/dashboard" /> : <AppWrapper><Lesson1b1 /></AppWrapper>} />
+        <Route path="/level-1/b/lesson-2" element={(!isAuthenticated || !isSPU) ? <Navigate to="/dashboard" /> : <AppWrapper><Lesson1b2 /></AppWrapper>} />
+        <Route path="/level-1/c/lesson-1" element={(!isAuthenticated || !isSPU) ? <Navigate to="/dashboard" /> : <AppWrapper><Lesson1c1 /></AppWrapper>} />
+        <Route path="/level-1/c/lesson-2" element={(!isAuthenticated || !isSPU) ? <Navigate to="/dashboard" /> : <AppWrapper><Lesson1c2 /></AppWrapper>} />
+        <Route path="/level-1/a/quiz-1" element={(!isAuthenticated || !isPU) ? <Navigate to="/dashboard" /> : <AppWrapper><Quiz1a1 /></AppWrapper>} />
+        <Route path="/level-1/a/quiz-2" element={(!isAuthenticated || !isPU) ? <Navigate to="/dashboard" /> : <AppWrapper><Quiz1a2 /></AppWrapper>} />
+        <Route path="/level-1/b/quiz-1" element={(!isAuthenticated || !isPU) ? <Navigate to="/dashboard" /> : <AppWrapper><Quiz1b1 /></AppWrapper>} />
+        <Route path="/level-1/b/quiz-2" element={(!isAuthenticated || !isPU) ? <Navigate to="/dashboard" /> : <AppWrapper><Quiz1b2 /></AppWrapper>} />
+        <Route path="/level-1/c/quiz-1" element={(!isAuthenticated || !isPU) ? <Navigate to="/dashboard" /> : <AppWrapper><Quiz1c1 /></AppWrapper>} />
+        <Route path="/level-1/c/quiz-2" element={(!isAuthenticated || !isPU) ? <Navigate to="/dashboard" /> : <AppWrapper><Quiz1c2 /></AppWrapper>} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
       <Analytics />

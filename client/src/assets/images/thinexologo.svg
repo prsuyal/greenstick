@@ -1,0 +1,27 @@
+<svg width="145" height="84" viewBox="0 0 145 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_279_109)">
+<mask id="mask0_279_109" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="-52" y="-44" width="250" height="173">
+<path d="M-52 -44H198V128.164H-52V-44Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_279_109)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M25.9263 84.3443L78.6221 -0.181274H111.592L58.8959 84.3443H25.9263Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M111.592 84.3443L58.8959 -0.181274H25.9263L78.6221 84.3443H111.592Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M111.592 84.3443L58.8959 -0.181274H25.9263L78.6221 84.3443H111.592Z" stroke="white" stroke-miterlimit="10" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M145.775 41.8181L119.591 -0.181274H85.812L111.996 41.8181H145.775Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M145.775 41.8181L119.591 -0.181274H85.812L111.996 41.8181H145.775Z" stroke="white" stroke-miterlimit="10" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M85.3833 84.3443L111.567 42.3449H145.346L119.163 84.3443H85.3833Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M85.3833 84.3443L111.567 42.3449H145.346L119.163 84.3443H85.3833Z" stroke="white" stroke-miterlimit="10" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.224121 -0.181274H25.9266V84.3443H0.224121V-0.181274Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.224121 -0.181274H25.9266V84.3443H0.224121V-0.181274Z" stroke="white" stroke-miterlimit="10" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M25.9266 25.0891L43.0147 42.0815L25.9266 59.074V25.0891Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M25.9266 25.0891L43.0147 42.0815L25.9266 59.074V25.0891Z" stroke="white" stroke-miterlimit="10" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.223877 -0.181213H13.0751L0.223877 12.499V-0.181213Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.223877 -0.181213H13.0751L0.223877 12.499V-0.181213Z" stroke="white" stroke-miterlimit="10" stroke-linejoin="round"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_279_109">
+<rect width="145" height="84" fill="white"/>
+</clipPath>
+</defs>
+</svg>
