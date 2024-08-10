@@ -7,6 +7,7 @@ import gsLogoBlack from "../assets/images/logo-black.svg";
 import Footer from "../components/common/Footer";
 import { Helmet } from 'react-helmet';
 import ErrorMessage from "../components/ErrorMessage";
+import DisclaimerModal from "./Disclaimer";
 
 const RegisterPage = ({ onLogin, onRegister }) => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const RegisterPage = ({ onLogin, onRegister }) => {
   const [isUnder18, setIsUnder18] = useState(false);
   const [isUnder13, setIsUnder13] = useState(false);
   const [passwordError, setPasswordError] = useState("");
+  const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
 
   const navigate = useNavigate();
   const recaptchaRef = useRef();
@@ -60,9 +62,12 @@ const RegisterPage = ({ onLogin, onRegister }) => {
     return passwordRegex.test(password);
   };
 
-  const handleRegister = async (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-  
+    setIsDisclaimerOpen(true);
+  };
+
+  const handleConfirmRegister = async () => {
     const recaptchaValue = recaptchaRef.current.getValue();
     if (!recaptchaValue) {
       setErrorMessage("Please complete the reCAPTCHA");
@@ -160,11 +165,11 @@ const RegisterPage = ({ onLogin, onRegister }) => {
               Join Greenstick
             </h1>
             {errorMessage && (
-    <ErrorMessage 
-      message={errorMessage}
-      onClose={() => setErrorMessage(null)}
-    />
-  )}
+              <ErrorMessage 
+                message={errorMessage}
+                onClose={() => setErrorMessage(null)}
+              />
+            )}
             <div>
               <div>
                 <form onSubmit={handleRegister} className="space-y-6">
@@ -364,8 +369,15 @@ const RegisterPage = ({ onLogin, onRegister }) => {
         </div>
         <Footer />
       </div>
+      <DisclaimerModal 
+        isOpen={isDisclaimerOpen} 
+        onClose={() => {
+          setIsDisclaimerOpen(false);
+          handleConfirmRegister();
+        }} 
+      />
     </>
   );
 };
 
-export default RegisterPage;
+export default RegisterPage
