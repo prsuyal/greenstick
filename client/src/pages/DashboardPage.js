@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import gsap from "gsap";
 import gsLogoBlack from "../assets/images/logo-black.svg";
@@ -73,14 +73,25 @@ const DashboardPage = ({ user, onLogout }) => {
     navigate('/forgot-password');
   };
 
-  const DashboardCard = ({ title, content, isLocked = false }) => {
-    const [isShaking, setIsShaking] = useState(false);
+  const planHierarchy = ['Standard', 'Pro', 'Ultimate'];
 
+  const DashboardCard = ({ title, content, requiredPlan, isAlwaysLocked = false }) => {
+    const [isShaking, setIsShaking] = useState(false);
+    const user = JSON.parse(localStorage.getItem('user'));
+    
+    const isLocked = useMemo(() => {
+      if (isAlwaysLocked) return true;
+      if (!user) return true;
+      const userPlanIndex = planHierarchy.indexOf(user.plan);
+      const requiredPlanIndex = planHierarchy.indexOf(requiredPlan);
+      return userPlanIndex < requiredPlanIndex;
+    }, [user, requiredPlan, isAlwaysLocked]);
+  
     const handleLockedClick = () => {
       setIsShaking(true);
       setTimeout(() => setIsShaking(false), 500);
     };
-
+  
     return (
       <div className={`flex flex-col ${isLocked ? 'cursor-not-allowed' : ''}`}>
         <h2 className="text-2xl 2xl:text-3xl font-medium mb-3 2xl:mb-4">{title}</h2>
@@ -88,7 +99,6 @@ const DashboardPage = ({ user, onLogout }) => {
           className={`bg-white rounded-xl p-6 2xl:p-8 h-64 2xl:h-80 relative overflow-hidden border border-gray-200 transition-all duration-300 
             ${isLocked ? 'hover:shake' : 'hover:scale-105 hover:shadow-lg'}
             ${isShaking ? 'animate-shake' : ''}`}
-          onClick={isLocked ? handleLockedClick : undefined}
         >
           {content}
           {isLocked && (
@@ -97,6 +107,13 @@ const DashboardPage = ({ user, onLogout }) => {
             </button>
           )}
           <div className="absolute bottom-8 2xl:bottom-10 left-0 right-0 h-px bg-gray-400"></div>
+          
+          {isLocked && (
+            <div 
+              className="absolute inset-0 bg-transparent"
+              onClick={handleLockedClick}
+            />
+          )}
         </div>
       </div>
     );
@@ -341,12 +358,28 @@ const DashboardPage = ({ user, onLogout }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 2xl:gap-10 font-[Poppins]">
-            <DashboardCard title="Explore the stock market" content={<LearningCard />} />
-            <DashboardCard title="Want clarity?" content={<DictionaryCard />} isLocked={true} />
-            <DashboardCard title="Have questions?" content={<ExoCard />} />
-            <DashboardCard title="Share updates?" content={<CommunityCard />} isLocked={true} />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 2xl:gap-10 font-[Poppins]">
+        <DashboardCard 
+          title="Explore the stock market" 
+          content={<LearningCard />} 
+          requiredPlan="Standard"
+        />
+        <DashboardCard 
+          title="Want clarity?" 
+          content={<DictionaryCard />} 
+          isAlwaysLocked={true}
+        />
+        <DashboardCard 
+          title="Have questions?" 
+          content={<ExoCard />} 
+          requiredPlan="Pro"
+        />
+        <DashboardCard 
+          title="Share updates?" 
+          content={<CommunityCard />} 
+          isAlwaysLocked={true}
+        />
+      </div>
         </div>
       </div>
     </>
