@@ -1,19 +1,25 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import Lottie from "react-lottie";
 import dayNightAnimation from "../../assets/animations/daynightswitch.json";
 
 const DarkModeToggle = ({ isDarkMode, setIsDarkMode }) => {
   const lottieRef = useRef(null);
-  const animationHasPlayed = useRef(false);
+  const hasInteracted = useRef(false);
+
+  useEffect(() => {
+    if (lottieRef.current) {
+      lottieRef.current.anim.goToAndStop(isDarkMode ? 75 : 163, true);
+    }
+  }, []);
 
   const toggleDarkMode = () => {
     if (lottieRef.current) {
+      hasInteracted.current = true;
       if (isDarkMode) {
         lottieRef.current.anim.playSegments([140, 163], true);
       } else {
         lottieRef.current.anim.playSegments([50, 75], true);
       }
-      animationHasPlayed.current = true;
     }
     setIsDarkMode(!isDarkMode);
   };
@@ -35,6 +41,17 @@ const DarkModeToggle = ({ isDarkMode, setIsDarkMode }) => {
         height={50}
         width={100}
         isClickToPauseDisabled={true}
+        eventListeners={[
+          {
+            eventName: 'complete',
+            callback: () => {
+              if (!hasInteracted.current) {
+                // If animation completes without user interaction, reset to static frame
+                lottieRef.current.anim.goToAndStop(isDarkMode ? 75 : 163, true);
+              }
+            },
+          },
+        ]}
       />
     </button>
   );

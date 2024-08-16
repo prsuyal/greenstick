@@ -55,9 +55,9 @@ app.post('/api/exo', async (req, res) => {
   try {
     const response = await axios({
       method: 'post',
-      url: 'https://greenstick-exo-e1c12e1f579a.herokuapp.com/chat', // Updated URL
+      url: 'https://greenstick-exo-e1c12e1f579a.herokuapp.com/chat',
       headers: {
-        'x-api-key': process.env.EXO_API_KEY, // Ensure this environment variable is set
+        'x-api-key': process.env.EXO_API_KEY, 
       },
       data: { message: userMessage },
       responseType: 'stream'
