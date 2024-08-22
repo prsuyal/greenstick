@@ -471,7 +471,6 @@ const LandingPage = () => {
         </div>
         <Testimonials /> 
         <FAQSection />
-        <CountdownTimer />
         <Footer/>
       </div>
     </div>

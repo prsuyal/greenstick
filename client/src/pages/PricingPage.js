@@ -17,7 +17,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
             description: 'Starting point.',
             monthlyPrice: 20,
             yearlyPrice: 200,
-            features: ['Levels 1-6', 'Paper money trading', 'Exo 1.0 trial'],
+            features: ['Level 1 access', 'Levels 2–6 (coming soon)', 'Comprehensive dictionary', 'Exo 1.0 trial'],
             monthlyPriceId: 'price_1PXvWF2KoGC9FXDgwDBzvzPj',
             yearlyPriceId: 'price_1PXvWd2KoGC9FXDg6uDjUcck',
         },
@@ -26,7 +26,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
             description: 'Bang for your buck.',
             monthlyPrice: 28,
             yearlyPrice: 280,
-            features: ['Quizzes for optimal retention', 'Bonus lessons', 'Exo 1.0'],
+            features: ['Everything in Standard', 'Quizzes for optimal retention', 'Exclusive bonus lessons (coming soon)', 'Full access to Exo 1.0'],
             monthlyPriceId: 'price_1PXvXF2KoGC9FXDgQ8xGpC9P',
             yearlyPriceId: 'price_1PXvXP2KoGC9FXDgK1hLoSA3',
         },
@@ -35,7 +35,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
             description: 'Best of the best.',
             monthlyPrice: 36,
             yearlyPrice: 360,
-            features: ['Weekly reviews', 'Early access to beta features', 'Exo 1.5'],
+            features: ['Everything in Pro', 'Early access to beta features', 'Weekly reviews (coming soon)',  'Exo 2.0 (coming soon)'],
             monthlyPriceId: 'price_1PXvXn2KoGC9FXDgBs3OOVNi',
             yearlyPriceId: 'price_1PXvY02KoGC9FXDgIQFabFb8',
         },
@@ -126,17 +126,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
                     </div>
                 </div>
             </div>
-            <motion.div
-                initial={{ y: -50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 1 }}
-                className="flex justify-center items-center mt-24 bg-gray-100 text-black rounded-xl border border-dotted border-gray-600 max-w-md mx-auto p-2"
-            >
-                <span className="text-center text-sm font-semibold">
-                    Use promo code <span className="font-bold text-gs-dark-green">EARLY</span> for 20% off in your first three months
-                </span>
-            </motion.div>
-            <div className="flex-grow pb-32 pt-24 md:pt-28 lg:pt-16 px-4 sm:px-6 lg:px-8">
+            <div className="flex-grow pb-32 pt-24 md:pt-28 lg:pt-28 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center relative">
                         
