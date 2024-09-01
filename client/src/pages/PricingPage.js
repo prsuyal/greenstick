@@ -6,7 +6,6 @@ import stripePromise from "../utils/stripe";
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 
-
 const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
     const navigate = useNavigate();
     const [isYearly, setIsYearly] = useState(false);
@@ -43,32 +42,50 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
 
     const handleSubscribe = async (plan) => {
         if (!isAuthenticated) {
-          navigate('/register');
-        } else {
-          try {
-            const response = await fetch('https://api.greenstickusa.com/api/stripe/create-checkout-session', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                priceId: isYearly ? plan.yearlyPriceId : plan.monthlyPriceId,
-                userId: user.id,
-              }),
-            });
-      
-            const session = await response.json();
-            if (response.ok) {
-              setCheckoutSessionId(session.id);
-            } else {
-              console.error('Failed to create checkout session:', session);
+            navigate('/register');
+        } else if (user.subscription_id) {
+            try {
+                const response = await fetch('https://api.greenstickusa.com/api/stripe/create-customer-portal-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ userId: user.id }),
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    window.location.href = data.url;
+                } else {
+                    console.error('Failed to create customer portal session:', data);
+                }
+            } catch (error) {
+                console.error("Error creating customer portal session:", error);
             }
-          } catch (error) {
-            console.error("Error in subscription process:", error);
-          }
+        } else {
+            try {
+                const response = await fetch('https://api.greenstickusa.com/api/stripe/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        priceId: isYearly ? plan.yearlyPriceId : plan.monthlyPriceId,
+                        userId: user.id,
+                    }),
+                });
+
+                const session = await response.json();
+                if (response.ok) {
+                    setCheckoutSessionId(session.id);
+                } else {
+                    console.error('Failed to create checkout session:', session);
+                }
+            } catch (error) {
+                console.error("Error in subscription process:", error);
+            }
         }
-      };
-      
+    };
 
     useEffect(() => {
         if (checkoutSessionId) {
@@ -84,6 +101,21 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
             loadCheckout();
         }
     }, [checkoutSessionId]);
+
+    const getButtonText = (planName) => {
+        if (!isAuthenticated || !user.subscription_id) {
+            return 'Subscribe';
+        }
+        if (user.plan === planName) {
+            return 'Current Plan';
+        }
+        const currentPlanIndex = plans.findIndex(p => p.name === user.plan);
+        const thisPlanIndex = plans.findIndex(p => p.name === planName);
+        if (thisPlanIndex > currentPlanIndex) {
+            return 'Upgrade';
+        }
+        return 'Downgrade';
+    };
 
     return (
         <>
@@ -164,10 +196,15 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
                                     ))}
                                 </ul>
                                 <button
-                                    className="bg-gs-dark-green text-white font-medium py-2 px-4 rounded hover:bg-black transition-colors duration-300"
+                                    className={`text-white font-medium py-2 px-4 rounded transition-colors duration-300 ${
+                                        getButtonText(plan.name) === 'Current Plan' 
+                                            ? 'bg-gray-400 cursor-default' 
+                                            : 'bg-gs-dark-green hover:bg-black'
+                                    }`}
                                     onClick={() => handleSubscribe(plan)}
+                                    disabled={getButtonText(plan.name) === 'Current Plan'}
                                 >
-                                    Subscribe
+                                    {getButtonText(plan.name)}
                                 </button>
                             </div>
                         ))}
@@ -179,7 +216,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
                                 onClick={() => navigate('/dashboard')}
                                 className="text-gs-dark-green hover:underline font-[Poppins]"
                             >
-                                Continue without a plan
+                                Continue to dashboard
                             </a>
                         </div>
                     )}
