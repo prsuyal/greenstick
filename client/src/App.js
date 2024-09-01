@@ -34,6 +34,7 @@ import Quiz1c1 from './pages/Level 1/1C/Lesson 1/Quiz1.js';
 import Lesson1c2 from './pages/Level 1/1C/Lesson 2/Module2.js';
 import Quiz1c2 from './pages/Level 1/1C/Lesson 2/Quiz2.js';
 import ProtectedRoute from './components/ProtectedRoute.js';
+import DeleteAccountPage from './pages/DeleteAccountPage.js';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -301,6 +302,14 @@ const App = () => {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated} requiredPlan="Pro">
               <AppWrapper><Quiz1c2 /></AppWrapper>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/delete-account" 
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <AppWrapper><DeleteAccountPage /></AppWrapper>
             </ProtectedRoute>
           } 
         />
