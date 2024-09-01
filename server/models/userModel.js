@@ -1,6 +1,7 @@
 const pool = require('../config/db');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const createUser = async (email, password, authProvider, username, fullName, dateOfBirth, tosChecked, mailingListChecked, betaTestingChecked) => {
   const verificationToken = crypto.randomBytes(20).toString('hex');
@@ -285,7 +286,37 @@ const getLatestQuizProgress = async (userId) => {
   }
 };
 
+const deleteUser = async (userId) => {
+  try {
+    await pool.query('BEGIN');
+    const user = await getUserById(userId);
 
+    if (user.stripe_customer_id) {
+      try {
+        await stripe.customers.del(user.stripe_customer_id);
+      } catch (stripeError) {
+        console.error('Error deleting Stripe customer:', stripeError);
+        if (stripeError.code !== 'resource_missing') {
+          throw stripeError;
+        }
+      }
+    }
+
+    await pool.query('DELETE FROM user_progress WHERE user_id = $1', [userId]);
+
+    await pool.query('DELETE FROM user_xp WHERE user_id = $1', [userId]);
+
+    await pool.query('DELETE FROM user_quiz_progress WHERE user_id = $1', [userId]);
+
+    await pool.query('DELETE FROM users WHERE id = $1', [userId]);
+
+    await pool.query('COMMIT');
+  } catch (error) {
+    await pool.query('ROLLBACK');
+    console.error('Error deleting user:', error);
+    throw new Error('Failed to delete user');
+  }
+};
 module.exports = {
   createUser,
   loginUser,
@@ -308,4 +339,5 @@ module.exports = {
   decodeAnswers,
   getLatestProgress,
   getLatestQuizProgress,
+  deleteUser
 };
