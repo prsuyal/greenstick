@@ -15,7 +15,7 @@ const DeleteAccountPage = ({ user, onLogout }) => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/api/users/${user.id}`, {
+      const response = await fetch(`https://api.greenstickusa.com/api/users/${user.id}`, {
         method: 'DELETE',
         credentials: 'include',
       });
