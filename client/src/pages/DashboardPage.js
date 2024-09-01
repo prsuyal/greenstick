@@ -10,19 +10,44 @@ import StockMarketImage from '../assets/images/undraw_stock_prices_re_js33.svg';
 import CommunityImage from '../assets/images/undraw_social_friends_re_7uaa.svg';
 import ExoLogo from '../assets/images/thinexologo.svg';
 
-const DashboardPage = ({ user, onLogout }) => {
-  const [currentUser, setCurrentUser] = useState(user);
+const DashboardPage = ({ user: initialUser, onLogout }) => {
+  const [currentUser, setCurrentUser] = useState(initialUser);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const greetingRef = useRef(null);
   const settingsMenuRef = useRef(null);
   const settingsButtonRef = useRef(null);
 
-  useEffect(() => {
-    if (user) {
-      setCurrentUser(user);
+  const fetchLatestUserData = async () => {
+    try {
+      const response = await fetch(`https://api.greenstickusa.com/api/users/${initialUser.id}`);
+      if (response.ok) {
+        const userData = await response.json();
+        setCurrentUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
+      } else {
+        console.error('Failed to fetch latest user data');
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
     }
-  }, [user]);
+  };
+
+  useEffect(() => {
+    fetchLatestUserData();
+  }, []);
+
+  useEffect(() => {
+    const handleFocus = () => {
+      fetchLatestUserData();
+    };
+
+    window.addEventListener('focus', handleFocus);
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, []);
+
 
   useEffect(() => {
     const timeline = gsap.timeline({ defaults: { ease: "back.out(1.7)" } });
