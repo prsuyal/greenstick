@@ -11,6 +11,8 @@ router.post('/create-checkout-session', async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
+    const standardPlanPriceIds = ['price_1PXvWF2KoGC9FXDgwDBzvzPj', 'price_1PXvWd2KoGC9FXDg6uDjUcck'];
+    const isEligibleForTrial = !user.payment_status && standardPlanPriceIds.includes(priceId);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -31,6 +33,9 @@ router.post('/create-checkout-session', async (req, res) => {
       cancel_url: `${process.env.DOMAIN}/canceled`,
       client_reference_id: userId,
       customer: user.stripe_customer_id,
+      subscription_data: {
+        trial_period_days: isEligibleForTrial ? 7 : undefined, 
+      }
     });
 
     res.json({ id: session.id });

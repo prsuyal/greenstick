@@ -5,6 +5,7 @@ import Footer from "../components/common/Footer";
 import stripePromise from "../utils/stripe";
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
+import FunkyArrow from '../assets/images/75.svg';
 
 const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
     const navigate = useNavigate();
@@ -120,8 +121,9 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
     return (
         <>
         <Helmet>
-        <title>Pricing - Greenstick</title>
-    </Helmet>
+            <title>Pricing - Greenstick</title>
+            <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet" />
+        </Helmet>
         <div className="flex flex-col min-h-screen bg-white">
             <div className="fixed top-0 left-0 w-full z-50 px-4 py-2 sm:py-3 bg-white border-y">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -159,68 +161,81 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
                 </div>
             </div>
             <div className="flex-grow pb-32 pt-24 md:pt-28 lg:pt-28 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-7xl mx-auto">
-                    <div className="text-center relative">
-                        
-                        <h1 className="font-[Poppins] text-7xl font-medium mb-4">Pricing</h1>
-                        <p className="font-[Poppins] text-2xl mb-8">Choose the plan that's right for you.</p>
-                        <div className="font-[Poppins] flex justify-center items-center mb-8">
-                            <span className={`mr-2 ${!isYearly ? 'text-gs-dark-green' : ''}`}>Monthly</span>
-                            <button
-                                className={`w-12 h-6 rounded-full p-1 ${isYearly ? 'bg-gs-dark-green' : 'bg-gray-300'}`}
-                                onClick={() => setIsYearly(!isYearly)}
-                            >
-                                <div className={`w-4 h-4 rounded-full bg-white transform duration-300 ease-in-out ${isYearly ? 'translate-x-6' : ''}`} />
-                            </button>
-                            <span className={`ml-2 ${isYearly ? 'text-gs-dark-green' : ''}`}>Yearly</span>
-                        </div>
-                    </div>
+    <div className="max-w-7xl mx-auto">
+        <div className="text-center relative">
+            <h1 className="font-[Poppins] text-7xl font-medium mb-4">Pricing</h1>
+            <p className="font-[Poppins] text-2xl mb-8">Choose the plan that's right for you.</p>
+            <div className="font-[Poppins] flex justify-center items-center mb-12 sm:mb-8"> {/* Increased margin-bottom for mobile */}
+                <span className={`mr-2 ${!isYearly ? 'text-gs-dark-green' : ''}`}>Monthly</span>
+                <button
+                    className={`w-12 h-6 rounded-full p-1 ${isYearly ? 'bg-gs-dark-green' : 'bg-gray-300'}`}
+                    onClick={() => setIsYearly(!isYearly)}
+                >
+                    <div className={`w-4 h-4 rounded-full bg-white transform duration-300 ease-in-out ${isYearly ? 'translate-x-6' : ''}`} />
+                </button>
+                <span className={`ml-2 ${isYearly ? 'text-gs-dark-green' : ''}`}>Yearly</span>
+            </div>
+        </div>
 
-                    <div className="font-[Poppins] grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {plans.map((plan) => (
-                            <div key={plan.name} className="border rounded-lg p-6 flex flex-col">
-                                <h2 className="text-2xl font-medium mb-2">{plan.name}</h2>
-                                <p className="text-gray-600 mb-4">{plan.description}</p>
-                                <p className="text-3xl font-medium mb-6">
-                                    ${isYearly ? plan.yearlyPrice : plan.monthlyPrice}
-                                    <span className="text-sm font-normal">/{isYearly ? 'year' : 'month'}</span>
-                                </p>
-                                <ul className="mb-6 flex-grow">
-                                    {plan.features.map((feature) => (
-                                        <li key={feature} className="flex items-center mb-2">
-                                            <svg className="w-4 h-4 mr-2 text-gs-dark-green" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                            </svg>
-                                            {feature}
-                                        </li>
-                                    ))}
-                                </ul>
-                                <button
-                                    className={`text-white font-medium py-2 px-4 rounded transition-colors duration-300 ${
-                                        getButtonText(plan.name) === 'Current Plan' 
-                                            ? 'bg-gray-400 cursor-default' 
-                                            : 'bg-gs-dark-green hover:bg-black'
-                                    }`}
-                                    onClick={() => handleSubscribe(plan)}
-                                    disabled={getButtonText(plan.name) === 'Current Plan'}
-                                >
-                                    {getButtonText(plan.name)}
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                    {isAuthenticated && (
-                        <div className="mt-8 text-center">
-                            <a
-                                href="#"
-                                onClick={() => navigate('/dashboard')}
-                                className="text-gs-dark-green hover:underline font-[Poppins]"
-                            >
-                                Continue to dashboard
-                            </a>
-                        </div>
-                    )}
+        <div className="font-[Poppins] relative md:mt-8 mt-48"> {/* Add margin-top for mobile */}
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full md:left-0 md:translate-x-0 z-10">
+                <div className="relative">
+                    <img src={FunkyArrow} alt="Funky arrow" className="w-32 h-32 relative left-10" style={{ transform: 'rotate(-140deg)' }} />
+                    <span
+                        className="absolute -top-4 left-0 transform -translate-x-1/2 -translate-y-1/2 text-3xl font-bold text-gs-dark-green"
+                        style={{ fontFamily: "'Caveat', cursive", transform: 'rotate(-10deg)' }}
+                    >
+                        Try for free!
+                    </span>
                 </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:mt-12 mt-48"> {/* Add margin-top for mobile */}
+                {plans.map((plan, index) => (
+                    <div key={plan.name} className={`border rounded-lg p-6 flex flex-col ${index === 0 ? 'relative z-0' : ''}`}>
+                        <h2 className="text-2xl font-medium mb-2">{plan.name}</h2>
+                        <p className="text-gray-600 mb-4">{plan.description}</p>
+                        <p className="text-3xl font-medium mb-6">
+                            ${isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                            <span className="text-sm font-normal">/{isYearly ? 'year' : 'month'}</span>
+                        </p>
+                        <ul className="mb-6 flex-grow">
+                            {plan.features.map((feature) => (
+                                <li key={feature} className="flex items-center mb-2">
+                                    <svg className="w-4 h-4 mr-2 text-gs-dark-green" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                    {feature}
+                                </li>
+                            ))}
+                        </ul>
+                        <button
+                            className={`text-white font-medium py-2 px-4 rounded transition-colors duration-300 ${
+                                getButtonText(plan.name) === 'Current Plan' 
+                                    ? 'bg-gray-400 cursor-default' 
+                                    : 'bg-gs-dark-green hover:bg-black'
+                            }`}
+                            onClick={() => handleSubscribe(plan)}
+                            disabled={getButtonText(plan.name) === 'Current Plan'}
+                        >
+                            {getButtonText(plan.name)}
+                        </button>
+                    </div>
+                ))}
+            </div>
+        </div>
+        {isAuthenticated && (
+            <div className="mt-8 text-center">
+                <a
+                    href="#"
+                    onClick={() => navigate('/dashboard')}
+                    className="text-gs-dark-green hover:underline font-[Poppins]"
+                >
+                    Continue to dashboard
+                </a>
+            </div>
+        )}
+    </div>
+
             </div>
 
             <Footer />
