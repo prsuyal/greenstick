@@ -82,7 +82,7 @@ const LandingPage = () => {
   };
 
   useEffect(() => {
-    const hasVisitedBefore = localStorage.getItem("hasVisitedBefore");
+    const hasVisitedBefore = sessionStorage.getItem("hasVisitedBefore");
 
     if (!hasVisitedBefore) {
       document.body.style.overflow = "hidden"; 
@@ -94,7 +94,7 @@ const LandingPage = () => {
         onComplete: () => {
           setAnimationComplete(true);
           document.body.style.overflow = "auto"; 
-          localStorage.setItem("hasVisitedBefore", "true");
+          sessionStorage.setItem("hasVisitedBefore", "true");
         },
       });
 

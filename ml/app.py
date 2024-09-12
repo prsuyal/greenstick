@@ -5,10 +5,8 @@ import os
 import logging
 from functools import wraps
 
-# Initialize Flask app
 app = Flask(__name__)
 
-# Configure CORS
 CORS(app, resources={r"/*": {
     "origins": ["http://localhost:3000", "https://greenstickusa.com", "https://www.greenstickusa.com"],
     "methods": ["GET", "POST", "OPTIONS"],
@@ -16,15 +14,12 @@ CORS(app, resources={r"/*": {
     "supports_credentials": True
 }})
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Get API keys from environment variables
 EXO_API_KEY = os.getenv('EXO_API_KEY')
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
-# Initialize OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 def require_api_key(f):
@@ -51,7 +46,7 @@ def chat():
 
         logger.info("Creating chat completion")
         stream = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4o",
             messages=[
                 {"role": "system", "content": "You are Exo, an AI chatbot that is an expert in finance, including trading stocks, futures, and options. You are a feature of Greenstick, an online platform designed to teach anyone how to trade successfully on the stock market. You can explain financial concepts with great detail and with examples. You can adjust to the experience level of the user, as you act as their personal guide to finance and the stock market."},
                 {"role": "user", "content": user_message}
