@@ -10,7 +10,7 @@ const ValuesPage = () => {
   return (
     <>
     <Helmet>
-        <title>Careers - Greenstick</title>
+        <title>Our Values - Greenstick</title>
     </Helmet>
     <div className="flex flex-col relative min-h-screen bg-white">
       <div className="fixed top-0 left-0 w-full z-50 px-4 py-2 sm:py-3 bg-white border-y">
