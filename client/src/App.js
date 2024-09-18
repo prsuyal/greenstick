@@ -35,6 +35,10 @@ import Lesson1c2 from './pages/Level 1/1C/Lesson 2/Module2.js';
 import Quiz1c2 from './pages/Level 1/1C/Lesson 2/Quiz2.js';
 import ProtectedRoute from './components/ProtectedRoute.js';
 import DeleteAccountPage from './pages/DeleteAccountPage.js';
+import ValuesPage from './pages/Careers/ValuesPage.js';
+import OpenRolesPage from './pages/Careers/OpenRolesPage.js';
+import ApplyPage from './pages/Careers/ApplyPage.js';
+import ApplicationSuccessPage from './pages/Careers/ApplicationSuccessPage.js';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -171,6 +175,13 @@ const App = () => {
         <Route path="/verify-email/:token" element={<AppWrapper><VerifyEmailPage /></AppWrapper>} />
         <Route path="/forgot-password" element={<AppWrapper><ForgotPasswordPage /></AppWrapper>} />
         <Route path="/reset-password/:token" element={<AppWrapper><ResetPasswordPage /></AppWrapper>} />
+        <Route path="/careers" element={<AppWrapper><OpenRolesPage /></AppWrapper>} />
+        <Route path="/our-values" element={<AppWrapper><ValuesPage /></AppWrapper>} />
+        <Route path="/apply" element={<AppWrapper><ApplyPage /></AppWrapper>} />
+        <Route path="/thanks-for-applying" element={<AppWrapper><ApplicationSuccessPage /></AppWrapper>} />
+
+
+
   
         {/* Protected routes */}
         <Route 
