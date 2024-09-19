@@ -35,7 +35,7 @@ const Footer = () => {
                             <a href="https://www.facebook.com/people/Greenstick-USA/61561274224424/" target="_blank" rel="noopener noreferrer" className="hover:text-gs-dark-green">
                                 <i className="fab fa-facebook-f"></i>
                             </a>
-                            <a href="https://www.instagram.com/greenstick_official" target="_blank" rel="noopener noreferrer" className="hover:text-gs-dark-green">
+                            <a href="https://www.instagram.com/greenstickusa" target="_blank" rel="noopener noreferrer" className="hover:text-gs-dark-green">
                                 <i className="fab fa-instagram"></i>
                             </a>
                             <a href="https://www.tiktok.com/@greenstickofficial" target="_blank" rel="noopener noreferrer" className="hover:text-gs-dark-green">
