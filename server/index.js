@@ -13,7 +13,7 @@ const progressRoutes = require('./routes/progressRoutes');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const allowedOrigins = ['http://localhost:3000', 'https://www.greenstickusa.com', 'https://greenstickusa.com'];
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'https://www.greenstickusa.com', 'https://greenstickusa.com'];
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
