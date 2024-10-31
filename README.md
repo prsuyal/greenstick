@@ -9,4 +9,4 @@ This codebase is fully developed and managed by Pranshu Suyal, who oversees all 
 
 ## What is Greenstick?
 
-Greenstick is an inexpensive, educational platform designed to be a one-stop-shop for anyone looking to master the stock market. We integrate curated lessons with creative animations and interactive modules, practical simulations, and an AI-powered personal mentor to make it accessible and straightforward for users to learn.
+[Greenstick](https://greenstickusa.com) is an inexpensive, educational platform designed to be a one-stop-shop for anyone looking to master the stock market. We integrate curated lessons with creative animations and interactive modules, practical simulations, and an AI-powered personal mentor to make it accessible and straightforward for users to learn.
