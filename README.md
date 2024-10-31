@@ -1,7 +1,7 @@
 # Greenstick
 
 > [!CAUTION]
-> Greenstick is a platform for stock market education developed and copyrighted by Greenstick LLC. This project and all associated code, designs, and intellectual property are protected under copyright law and may not be used, distributed, or reproduced without explicit permission from Greenstick LLC. Unauthorized access, use, or replication of this software is strictly prohibited.
+> Greenstick is a platform for stock market education developed and copyrighted by Greenstick LLC. This project and all associated code, designs, and intellectual property are protected under copyright law and may not be used, distributed, or reproduced without explicit permission from Greenstick LLC. Unauthorized access, use, or replication of this software, in whole or in part, is strictly prohibited. All rights are reserved.
 >
 > **Do not share with unauthorized persons.**
 
