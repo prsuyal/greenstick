@@ -165,7 +165,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
         <div className="text-center relative">
             <h1 className="font-[Poppins] text-7xl font-medium mb-4">Pricing</h1>
             <p className="font-[Poppins] text-2xl mb-8">Choose the plan that's right for you.</p>
-            <div className="font-[Poppins] flex justify-center items-center mb-12 sm:mb-8"> {/* Increased margin-bottom for mobile */}
+            <div className="font-[Poppins] flex justify-center items-center mb-12 sm:mb-8">
                 <span className={`mr-2 ${!isYearly ? 'text-gs-dark-green' : ''}`}>Monthly</span>
                 <button
                     className={`w-12 h-6 rounded-full p-1 ${isYearly ? 'bg-gs-dark-green' : 'bg-gray-300'}`}
@@ -177,7 +177,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
             </div>
         </div>
 
-        <div className="font-[Poppins] relative md:mt-8 mt-48"> {/* Add margin-top for mobile */}
+        <div className="font-[Poppins] relative md:mt-8 mt-48"> 
             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full md:left-0 md:translate-x-0 z-10">
                 <div className="relative">
                     <img src={FunkyArrow} alt="Funky arrow" className="w-32 h-32 relative left-10" style={{ transform: 'rotate(-140deg)' }} />
@@ -189,7 +189,7 @@ const PricingPage = ({ isAuthenticated, onPayment, user, onLogout }) => {
                     </span>
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:mt-12 mt-48"> {/* Add margin-top for mobile */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:mt-12 mt-48">
                 {plans.map((plan, index) => (
                     <div key={plan.name} className={`border rounded-lg p-6 flex flex-col ${index === 0 ? 'relative z-0' : ''}`}>
                         <h2 className="text-2xl font-medium mb-2">{plan.name}</h2>

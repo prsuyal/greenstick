@@ -70,7 +70,6 @@ const SubLevelBLesson2 = ({ user }) => {
       <p>
         Now, let's try to break down these long-term trends from a trader's perspective. During bullish periods, the theory of trading is fairly simple. You can buy low, sell high, and make the difference as your profit.
       </p>
-      {/* [Placeholder: animation for longs] */}
     </>,
     <>
       <p>
@@ -87,7 +86,6 @@ const SubLevelBLesson2 = ({ user }) => {
       <p>
         Just like with long trading, your profit (or loss) is the price you sold at minus the price you bought at. The only difference is that with short selling, you sell before you buy.
       </p>
-      {/* [Placeholder: animation for shorts] */}
     </>,
     <>
       <p>

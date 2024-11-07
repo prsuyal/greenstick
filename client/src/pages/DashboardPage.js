@@ -363,13 +363,10 @@ const DashboardPage = ({ user: initialUser, onLogout }) => {
           }
         `}
       </style>
-      {/* Mobile View */}
       <div className="lg:hidden">
         <MobileView />
       </div>
-      {/* Desktop View */}
       <div className="hidden lg:flex h-screen bg-white overflow-hidden">
-        {/* Sidebar */}
         <div className="w-64 2xl:w-72 bg-[#edf6f0] p-6 2xl:p-8 flex flex-col">
           <img
             src={gsLogoBlack}
@@ -421,7 +418,6 @@ const DashboardPage = ({ user: initialUser, onLogout }) => {
           </div>
         </div>
 
-        {/* Main Content */}
         <div className="flex-grow pt-10 2xl:pt-12 p-10 2xl:p-12 flex flex-col overflow-y-auto">
           <div className="flex justify-between items-center mb-6 2xl:mb-10">
             <h1
